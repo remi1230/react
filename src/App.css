@@ -3,16 +3,18 @@
   --menuBg: #e4e4e4;
   --importantContentText: #6B4747;
   --background: #FFF8E8;
-  --prodText: #2A3BD1;
-  --prodPrice: #2F0E5A;
+  --prodText: #E1E4FF;
+  --prodPrice: #bcaad4;
+  --valeursTxt: #2F0E5A;
   --prodsTitle: #D12B5D;
-  --titleBackground: #D9D9D92A;
+  --titleBackground: #D9D9D9BD;
   --titleText: #E93219;
   --paginationItemBg: #D9D9D9;
   --paginationItemText: #3E9C86;
   --paginationItemSelect: #949494;
   --paginationItemOnHoverBg: #C3E6E9;
   --paginationItemOnHoverText: #E5A443;
+  --cardProdBg: #dfd7cd;
 }
 
 *,

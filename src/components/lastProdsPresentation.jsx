@@ -1,49 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import ProdPresentation from './prodPresentation';
 
 const ComponentContainer = styled.div`
     display: block;
-    margin-top: 50px;
+    margin: 50px 0 50px 0;
+`;
+const ImagesSuperContainer = styled.div`
+    display: flex;
 `;
 const ImagesContainer = styled.div`
+    width: 90%;
+    margin: auto;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     justify-content: space-around;
+    justify-items: center;
+    gap: 25px;
+    @media (max-width: 1777px) {
+        grid-template-columns: repeat(5, 1fr); 
+    }
+    @media (max-width: 1550px) {
+        grid-template-columns: repeat(4, 1fr); 
+    }
     @media (max-width: 1350px) {
         grid-template-columns: repeat(3, 1fr); 
     }
-    @media (max-width: 800px) {
+    @media (max-width: 900px) {
         grid-template-columns: repeat(2, 1fr); 
     }
-    @media (max-width: 500px) {
+    @media (max-width: 600px) {
         grid-template-columns: repeat(1, 1fr); 
     }
-`;
-const ImageProduitContainer = styled.div`
-    display: block;
-`;
-const ImageProduit = styled.img`
-    width: 200px;
-    height: 250px;
-    border: 1px #ccc solid;
-    border-radius: 35px;
-    background: linear-gradient(42deg, rgb(2, 0, 36) 0%, rgb(59, 102, 104) 55%, rgb(73, 187, 160) 100%);
 `;
 const TitleProduits = styled.div`
     font-size: 28px;
     color: var(--prodsTitle);
-    margin-bottom: 25px;
-`;
-const TitleProduit = styled.div`
-    font-size: 18px;
-    color: var(--prodText);
-    margin-bottom: 25px;
-`;
-const PriceProduit = styled.div`
-    font-size: 18px;
-    color: var(--prodText);
-    margin-bottom: 25px;
+    margin: 25px 0 25px 0;
 `;
 
 class RandomNumberGenerator {
@@ -69,15 +63,9 @@ class RandomNumberGenerator {
       }
       return this.numbers.pop();
     }
-  }
-  
- 
-const rng = new RandomNumberGenerator();
-
-function truncateString(str, num) {
-    return str.length > num ? str.slice(0, num) + '...' : str;
 }
-
+  
+const rng = new RandomNumberGenerator();
 
 const LastProdsPresentation = () => {
   const [data, setData]       = useState([]);
@@ -116,15 +104,13 @@ const LastProdsPresentation = () => {
   return (
     <ComponentContainer>
       <TitleProduits>Nos derniers produits</TitleProduits>
-      <ImagesContainer>
-        {data.map(item => (
-          <ImageProduitContainer>
-            <TitleProduit>{truncateString(item.title, 25)}</TitleProduit>
-            <ImageProduit src={item.images[0]} alt={item.title} />
-            <PriceProduit>{item.price + ' €'}</PriceProduit>
-          </ImageProduitContainer>
-        ))}
-      </ImagesContainer>
+      <ImagesSuperContainer>
+        <ImagesContainer>
+          {data.map(item => (
+            <ProdPresentation image={item.images[0]} title={item.title} price={item.price} />
+          ))}
+        </ImagesContainer>
+      </ImagesSuperContainer>
     </ComponentContainer>
   );
 };

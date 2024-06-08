@@ -7,7 +7,7 @@ const DivCategories = styled.div`
 `;
 
 function Categories() {
-  return <DivCategories>Contact Page</DivCategories>;
+  return <DivCategories>Catégories Page</DivCategories>;
 }
 
 export default Categories;
