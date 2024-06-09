@@ -15,6 +15,10 @@
   --paginationItemOnHoverBg: #C3E6E9;
   --paginationItemOnHoverText: #E5A443;
   --cardProdBg: #dfd7cd;
+  --quantiteBg: #eee;
+  --quantiteTitle: #B3687E;;
+  --quantiteTxt: #E93219;
+  --quantiteNumber: #95668D;
 }
 
 *,

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -28,8 +29,14 @@ function truncateString(str, num) {
 }
 
 const ProdPresentation = (props) => {
+  const navigate = useNavigate();
+
+  const handleImageClick = (id) => {
+      navigate(`/produit/${id}`);
+    };
+
   return (
-    <CardProduit sx={{ width: 275 }}>
+    <CardProduit sx={{ width: 275 }}  onClick={() => handleImageClick(props.id)} style={{ cursor: 'pointer' }}>
         <CardContentStyled>
         <ImageProduitContainer>
             <TitleProduit>{truncateString(props.title, 25)}</TitleProduit>
