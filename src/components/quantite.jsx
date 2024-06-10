@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 const QuantiteContainer = styled.div`
     display: block;
@@ -27,11 +29,12 @@ const QuantiteButtonLeftContainer = styled.div`
     border-radius: 50px;
     background-color: var(--quantiteBg);
     color: var(--quantiteTxt);
+    cursor: pointer;
 `;
 const QuantiteButtonLeftContent = styled.div`
     position: absolute;
-    left: 8px;
-    top: -7px;
+    left: 1px;
+    top: -1px;
 `;
 const QuantiteButtonRightContainer = styled.div`
     position: relative;
@@ -41,11 +44,12 @@ const QuantiteButtonRightContainer = styled.div`
     border-radius: 50px;
     background-color: var(--quantiteBg);
     color: var(--quantiteTxt);
+    cursor: pointer;
 `;
 const QuantiteButtonRightContent = styled.div`
     position: absolute;
-    left: 5px;
-    top: -4px;
+    left: 1px;
+    top: -2px;
 `;
 const QuantiteButtonNumberContainer = styled.div`
     display: flex;
@@ -74,13 +78,13 @@ const Quantite = () => {
             </QuantiteTitleContainer>
             <QuantiteButtonContainer>
                 <QuantiteButtonLeftContainer onClick={decrementQuantity}>
-                    <QuantiteButtonLeftContent>-</QuantiteButtonLeftContent>
+                    <QuantiteButtonLeftContent><RemoveIcon /></QuantiteButtonLeftContent>
                 </QuantiteButtonLeftContainer>
                 <QuantiteButtonNumberContainer>
-                    <QuantiteButtonNumberContent>1</QuantiteButtonNumberContent>
+                    <QuantiteButtonNumberContent>{quantity}</QuantiteButtonNumberContent>
                 </QuantiteButtonNumberContainer>
                 <QuantiteButtonRightContainer onClick={incrementQuantity}>
-                    <QuantiteButtonRightContent>+</QuantiteButtonRightContent>
+                    <QuantiteButtonRightContent><AddIcon /></QuantiteButtonRightContent>
                 </QuantiteButtonRightContainer>
             </QuantiteButtonContainer>
         </QuantiteContainer>

@@ -3,6 +3,8 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Quantite from './quantite';
+import AddToCartButton from './AddToCartButton';
+import Reviews from './Reviews';
 
 const ImageProduitContainer = styled.div`
     display: block;
@@ -17,9 +19,21 @@ const PriceProduit = styled.div`
     color: var(--prodPrice);
     margin-bottom: 20px;
 `;
+const DivSuperContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 100px;
+`;
+const DivContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    margin: auto;
+    justify-content: center;
+`;
 const CardProduitContainer = styled.div`
     display: flex;
-    margin-bottom: 300px;
+    flex-direction: column;
 `;
 const CardProduit = styled(Card)`
     margin: auto;
@@ -50,23 +64,29 @@ const ProdDetailPresentation = (props) => {
   const data = props.data;
 
   return (
-    <CardProduitContainer>
-        <CardProduit sx={{ width: 500 }}>
-            <CardContentStyled>
-            <CardProduitParameters>
-                <Quantite />
-            </CardProduitParameters>
-            <ImageProduitContainer>
-                <TitleProduit>{truncateString(data.title, 250)}</TitleProduit>
-                <CardMediaStyled height="275" component="img" image={data.images[0]} alt={data.title} />
-                <PriceProduit>{data.price + ' €'}</PriceProduit>
-            </ImageProduitContainer>
-            <CardProduitDescription>
-                <ProduitDescription>{data.description}</ProduitDescription>
-            </CardProduitDescription>
-            </CardContentStyled>
-        </CardProduit>
-    </CardProduitContainer>
+    <DivSuperContainer>
+        <DivContainer>
+            <CardProduitContainer>
+                <CardProduit sx={{ width: 400 }}>
+                    <CardContentStyled>
+                    <CardProduitParameters>
+                        <Quantite />
+                    </CardProduitParameters>
+                    <ImageProduitContainer>
+                        <TitleProduit>{truncateString(data.title, 250)}</TitleProduit>
+                        <CardMediaStyled height="275" component="img" image={data.images[0]} alt={data.title} />
+                        <PriceProduit>{data.price + ' €'}</PriceProduit>
+                    </ImageProduitContainer>
+                    <CardProduitDescription>
+                        <ProduitDescription>{data.description}</ProduitDescription>
+                    </CardProduitDescription>
+                    </CardContentStyled>
+                </CardProduit>
+            </CardProduitContainer>
+            <Reviews data={data.reviews} />
+        </DivContainer>
+        <AddToCartButton />
+    </DivSuperContainer>
   );
 };
 
