@@ -34,7 +34,7 @@ const Review = (props) => {
   const data = props.data;
   return (
     <CardReviewsContainer>
-        <CardReview sx={{ width: 400, backgroundColor: '#77aea1' }}>
+        <CardReview sx={{ width: '80%', backgroundColor: '#77aea1' }}>
             <ReviewsTitle>Vos avis</ReviewsTitle>
             {data.map((item, index) => (
                 <CardContentStyled>

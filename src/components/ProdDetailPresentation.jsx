@@ -6,8 +6,14 @@ import Quantite from './quantite';
 import AddToCartButton from './AddToCartButton';
 import Reviews from './Reviews';
 
-const ImageProduitContainer = styled.div`
+const ProduitsContainer = styled.div`
     display: block;
+`;
+const ImagesProduitContainer = styled.div`
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 55px;
 `;
 const TitleProduit = styled.div`
     font-size: 22px;
@@ -17,7 +23,6 @@ const TitleProduit = styled.div`
 const PriceProduit = styled.div`
     font-size: 18px;
     color: var(--prodPrice);
-    margin-bottom: 20px;
 `;
 const DivSuperContainer = styled.div`
     display: flex;
@@ -26,7 +31,7 @@ const DivSuperContainer = styled.div`
 `;
 const DivContainer = styled.div`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 50px;
     margin: auto;
     justify-content: center;
@@ -49,7 +54,7 @@ const CardProduitParameters = styled(Card)`
     background-color: #ddd;
 `;
 const CardMediaStyled = styled(CardMedia)`
-    height: 100%;
+    width: 275px;
 `;
 const ProduitDescription = styled(CardContent)`
     color: var(--importantContentText);
@@ -67,25 +72,28 @@ const ProdDetailPresentation = (props) => {
     <DivSuperContainer>
         <DivContainer>
             <CardProduitContainer>
-                <CardProduit sx={{ width: 400 }}>
+                <CardProduit sx={{ width: '80%' }}>
                     <CardContentStyled>
                     <CardProduitParameters>
                         <Quantite />
                     </CardProduitParameters>
-                    <ImageProduitContainer>
-                        <TitleProduit>{truncateString(data.title, 250)}</TitleProduit>
-                        <CardMediaStyled height="275" component="img" image={data.images[0]} alt={data.title} />
-                        <PriceProduit>{data.price + ' €'}</PriceProduit>
-                    </ImageProduitContainer>
+                    <ProduitsContainer>
+                        <TitleProduit>{truncateString(data.title, 250)}<PriceProduit>{data.price + ' €'}</PriceProduit></TitleProduit>
+                        <ImagesProduitContainer>
+                            {data.images.map(image =>
+                                <CardMediaStyled sx={{ width: data.images.length > 1 ? 300 : 375 }} component="img" image={image} alt={data.title} />
+                            )}
+                        </ImagesProduitContainer>
+                    </ProduitsContainer>
                     <CardProduitDescription>
                         <ProduitDescription>{data.description}</ProduitDescription>
                     </CardProduitDescription>
                     </CardContentStyled>
                 </CardProduit>
             </CardProduitContainer>
+            <AddToCartButton />
             <Reviews data={data.reviews} />
         </DivContainer>
-        <AddToCartButton />
     </DivSuperContainer>
   );
 };

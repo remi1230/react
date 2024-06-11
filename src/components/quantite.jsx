@@ -30,6 +30,10 @@ const QuantiteButtonLeftContainer = styled.div`
     background-color: var(--quantiteBg);
     color: var(--quantiteTxt);
     cursor: pointer;
+    &:hover {
+        background-color: var(--quantiteBgHover);
+        color: var(--quantiteTxtHover);
+    }
 `;
 const QuantiteButtonLeftContent = styled.div`
     position: absolute;
@@ -45,6 +49,10 @@ const QuantiteButtonRightContainer = styled.div`
     background-color: var(--quantiteBg);
     color: var(--quantiteTxt);
     cursor: pointer;
+    &:hover {
+        background-color: var(--quantiteBgHover);
+        color: var(--quantiteTxtHover);
+    }
 `;
 const QuantiteButtonRightContent = styled.div`
     position: absolute;
