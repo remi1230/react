@@ -13,6 +13,7 @@ import Contact from './pages/Contact';
 import Cart from './pages/Cart';
 import Connexion from './pages/Connexion';
 import ProduitDetail from './pages/ProduitDetail';
+import ProduitsByCategorie from './pages/ProduitsByCategorie';
 
 let link = document.createElement('link');
 link.rel  = 'stylesheet';
@@ -27,6 +28,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route exact path="/" element={<Accueil />} />
         <Route path="/produits" element={<Produits />} />
         <Route path="/produit/:id" element={<ProduitDetail />} />
+        <Route path="/categorie/:categorie" element={<ProduitsByCategorie />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/contact" element={<Contact />} />

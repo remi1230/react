@@ -7,13 +7,17 @@ import AddToCartButton from './AddToCartButton';
 import Reviews from './Reviews';
 
 const ProduitsContainer = styled.div`
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 const ImagesProduitContainer = styled.div`
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
-    padding: 55px;
+    padding: 25px 0 25px;
+    flex-wrap: wrap;
+    width: fit-content;
 `;
 const TitleProduit = styled.div`
     font-size: 22px;
@@ -72,7 +76,7 @@ const ProdDetailPresentation = (props) => {
     <DivSuperContainer>
         <DivContainer>
             <CardProduitContainer>
-                <CardProduit sx={{ width: '80%' }}>
+                <CardProduit sx={{ width: 'fit-content' }}>
                     <CardContentStyled>
                     <CardProduitParameters>
                         <Quantite />

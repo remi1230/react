@@ -1,13 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
+import CategoriesComp from '../components/Categories';
 
-const DivCategories = styled.div`
+const DivContainer = styled.div`
     margin-top: 75px;
-    font-size: 28px;
+    display: flex;
+    flex-direction: column;
 `;
 
 function Categories() {
-  return <DivCategories>Catégories Page</DivCategories>;
+  return (
+    <DivContainer>
+        <CategoriesComp title="Catégories" />
+    </DivContainer>
+    
+  );
 }
 
 export default Categories;
