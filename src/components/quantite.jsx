@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -67,16 +67,18 @@ const QuantiteButtonNumberContent = styled.div`
     color: var(--quantiteNumber);
 `;
 
-
-const Quantite = () => {
-    const [quantity, setQuantity] = useState(1);
+const Quantite = ({ quantity, setQuantity, onIncrement, onDecrement }) => {
 
     const incrementQuantity = () => {
-      setQuantity(prevQuantity => prevQuantity + 1);
+      const newQuantity = quantity + 1;
+      setQuantity(newQuantity);
+      if (onIncrement) onIncrement(newQuantity);
     };
   
     const decrementQuantity = () => {
-      setQuantity(prevQuantity => (prevQuantity > 1 ? prevQuantity - 1 : 1));
+      const newQuantity = quantity > 1 ? quantity - 1 : 1;
+      setQuantity(newQuantity);
+      if (onDecrement) onDecrement(newQuantity);
     };
 
     return (

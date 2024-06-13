@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { CartContext } from './CartContext';
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
 
@@ -7,18 +8,37 @@ const AddToCartButt = styled(Button)`
     font-size: 18px;
 `;
 
-const AddToCartButton = () => {
-  const [buttonText, setButtonText] = useState("+ PANIER");
+const AddToCartButton = ({ product, quantity }) => {
+  const { addToCart, removeFromCart, cart } = useContext(CartContext);
+  const [isInCart, setIsInCart] = useState(cart.some(item => item.id === product.id));
+  const [buttonText, setButtonText] = useState(isInCart ? "- PANIER" : "+ PANIER");
 
   const handleClick = () => {
-    setButtonText(prevText => (prevText === "+ PANIER" ? "- PANIER" : "+ PANIER"));
+    if (isInCart) {
+      removeFromCart(product);
+      setButtonText("+ PANIER");
+    } else {
+      addToCart({ ...product, quantity });
+      setButtonText("- PANIER");
+    }
+    setIsInCart(!isInCart);
   };
-  
+
   return (
-    <AddToCartButt variant="contained" color="primary"
-        style={{ margin: 'auto', marginTop: '-25px', backgroundColor: 'var(--addToCartBg)', color: 'var(--addToCartTxt)', fontWeight: 'bold' }} onClick={handleClick}>
-            {buttonText}
-        </AddToCartButt>
+    <AddToCartButt
+      variant="contained"
+      color="primary"
+      style={{
+        margin: 'auto',
+        marginTop: '-25px',
+        backgroundColor: 'var(--addToCartBg)',
+        color: 'var(--addToCartTxt)',
+        fontWeight: 'bold'
+      }}
+      onClick={handleClick}
+    >
+      {buttonText}
+    </AddToCartButt>
   );
 };
 

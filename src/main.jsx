@@ -15,6 +15,8 @@ import Connexion from './pages/Connexion';
 import ProduitDetail from './pages/ProduitDetail';
 import ProduitsByCategorie from './pages/ProduitsByCategorie';
 
+import { CartProvider } from './components/CartContext';
+
 let link = document.createElement('link');
 link.rel  = 'stylesheet';
 link.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
@@ -22,20 +24,22 @@ document.head.appendChild(link);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Router>
-      <Navigation />
-      <Routes>
-        <Route exact path="/" element={<Accueil />} />
-        <Route path="/produits" element={<Produits />} />
-        <Route path="/produit/:id" element={<ProduitDetail />} />
-        <Route path="/categorie/:categorie" element={<ProduitsByCategorie />} />
-        <Route path="/categories" element={<Categories />} />
-        <Route path="/favorite" element={<Favorite />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/connexion" element={<Connexion />} />
-      </Routes>
-      <Footer />
-    </Router>
+    <CartProvider>
+      <Router>
+        <Navigation />
+        <Routes>
+          <Route exact path="/" element={<Accueil />} />
+          <Route path="/produits" element={<Produits />} />
+          <Route path="/produit/:id" element={<ProduitDetail />} />
+          <Route path="/categorie/:categorie" element={<ProduitsByCategorie />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/favorite" element={<Favorite />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/connexion" element={<Connexion />} />
+        </Routes>
+        <Footer />
+      </Router>
+    </CartProvider>
   </React.StrictMode>,
 );
