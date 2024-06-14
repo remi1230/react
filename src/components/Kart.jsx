@@ -6,6 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Quantite from './quantite';
 import Button from '@mui/material/Button';
+import TrashIcon from '@mui/icons-material/DeleteForever';
 
 const CartContainer = styled.div`
   width: 1000px;
@@ -13,18 +14,16 @@ const CartContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
 `;
 
 const ProdDetailContainer = styled.div`
   display: flex;
   align-items: center;
-  padding: 20px;
 `;
 
 const ButtonContainer = styled.div`
   position: absolute;
-  top: 5px;
+  bottom: 5px;
   right: 5px;
 `;
 
@@ -36,6 +35,8 @@ const CartItem = styled(Card)`
   width: 80%;
   justify-content: space-between;
   align-items: center;
+  background-color: var(--categorieBg);
+  height: fit-content;
 `;
 
 const CardContentStyled = styled(CardContent)`
@@ -43,26 +44,52 @@ const CardContentStyled = styled(CardContent)`
 `;
 
 const CartItemThumbail = styled(CardMedia)`
+  flex: 3;
   width: 100px;
+  background: var(--prodBg);
+  border-radius: 100%;
+  padding: 7px;
+  border: 4px #ccc solid;
+  box-shadow: 2px 2px 5px #3e3e3e;
 `;
 
 const CartItemDetails = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 20px;
-  flex-grow: 1;
+  width: 500px;
+  gap: 20px;
 `;
 
-const CartItemTitle = styled.h3`
+const CartItemTitle = styled.h5`
+  color: var(--cartItemTitle);
   margin: 0;
 `;
 
 const CartItemPrice = styled.span`
+  font-size: 18px;
   color: #888;
 `;
 
 const CartButton = styled(Button)`
-  margin-top: 20px;
+  
+`;
+
+const TitlePanier = styled.h3`
+  color: var(--titlePanier);
+  margin: 10px 0 10px;
+`;
+
+const CaisseContainer = styled.div`
+  display: block;
+  margin-bottom: 100px;
+`;
+
+const PrixTotal = styled.div`
+  display: block;
+  margin-bottom: 0px;
+  color: var(--titlePanier);
+  font-weight: bold;
 `;
 
 const Cart = () => {
@@ -82,26 +109,38 @@ const Cart = () => {
     updateQuantity(productId, newQuantity);
   };
 
+  let prixTot = 0;
+  if(cart.length){
+    prixTot = cart.reduce((acc, val) => acc + (val.price * val.quantity), 0).toFixed(2);
+  }
+
   return (
     <CartContainer>
-      <h2>Mon Panier</h2>
+      <TitlePanier>Mon Panier</TitlePanier>
       {cart.length === 0 ? (
         <p>Votre panier est vide</p>
       ) : (
         cart.map((product, index) => (
           <CartItem key={product.id}>
             <ButtonContainer>
-              <Button
+              <Button sx={{ backgroundColor: 'transparent', '&:hover': {
+                  backgroundColor: 'transparent',
+                  color: '--var(trashHoverColor)',
+                }, }}
                 variant="contained"
-                color="secondary"
                 onClick={() => handleRemove(product)}
               >
-                Retirer
+                <TrashIcon
+                sx={{ backgroundColor: '#transparent', color: 'var(--trashBg)', '&:hover': {
+                  backgroundColor: '--var(trashHoverBg)',
+                  color: '--var(trashHoverColor)',
+                }, }}
+                fontSize="large"/>
               </Button>
             </ButtonContainer>
             <CardContentStyled>
               <ProdDetailContainer>
-                <CartItemThumbail key={index} component="img" image={product.images[0]} alt={product.title} />
+                <CartItemThumbail sx={{ width: '150px' }} key={index} component="img" image={product.images[0]} alt={product.title} />
                 <CartItemDetails>
                   <CartItemTitle>{product.title}</CartItemTitle>
                   <CartItemPrice>Prix unitaire: {product.price.toFixed(2)} €</CartItemPrice>
@@ -119,9 +158,13 @@ const Cart = () => {
         ))
       )}
       {cart.length > 0 && (
-        <CartButton variant="contained" color="primary">
-          Passer à la caisse
-        </CartButton>
+        <CaisseContainer>
+          <PrixTotal>Prix total du panier: {prixTot} €</PrixTotal>
+          <CartButton sx={{ color: 'var(--addToCartTxt)', marginTop: '20px', backgroundColor: 'var(--addToCartBg)', fontWeight: 900, }} variant="contained">
+            Passer à la caisse
+          </CartButton>
+        </CaisseContainer>
+        
       )}
     </CartContainer>
   );

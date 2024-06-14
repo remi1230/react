@@ -30,6 +30,14 @@
   --quantiteTxtHover: #548ebe;
   --categorieBg: #f5f8f9;
   --categorieTitle: #364a5a;
+  --trashBg: #a24d73;
+  --trashColor: #ecd7e1;
+  --trashHoverBg: #a26c4d;
+  --trashHoverColor: #ade4df;
+  --titlePanier: #364a5a;
+  --cartItemTitle: #364a5a;
+  --cartItemBg: #f5f8f9;
+  --prodBg: linear-gradient(42deg, rgb(20, 10, 36) 0%, rgb(82, 110, 110) 55%, rgb(179, 193, 190) 100%);
 }
 
 *,
