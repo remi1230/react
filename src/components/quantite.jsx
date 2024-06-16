@@ -11,7 +11,7 @@ function camelToKebab(camelCaseString) {
 }
 
 const cssParam = {
-    fontSize : 20,
+    fontSize : 18,
     width    : 24,
     height   : 24,
 };
@@ -107,6 +107,7 @@ const QuantiteButtonNumberContainer = styled.div`
 const QuantiteButtonNumberContent = styled.div`
     margin: auto;
     color: var(--quantiteNumber);
+    ${({ breakpoints }) => applyBreakpoints(breakpoints)}
 `;
 
 const Quantite = ({ breakpoints, quantity, setQuantity, onIncrement, onDecrement }) => {
@@ -161,7 +162,7 @@ const Quantite = ({ breakpoints, quantity, setQuantity, onIncrement, onDecrement
                     <QuantiteButtonLeftContent padding={padding}><RemoveIcon fontSize={iconFontSize} /></QuantiteButtonLeftContent>
                 </QuantiteButtonLeftContainer>
                 <QuantiteButtonNumberContainer>
-                    <QuantiteButtonNumberContent>{quantity}</QuantiteButtonNumberContent>
+                    <QuantiteButtonNumberContent breakpoints={breakpoints}>{quantity}</QuantiteButtonNumberContent>
                 </QuantiteButtonNumberContainer>
                 <QuantiteButtonRightContainer breakpoints={breakpoints} onClick={incrementQuantity}>
                     <QuantiteButtonRightContent padding={padding}><AddIcon fontSize={iconFontSize} /></QuantiteButtonRightContent>

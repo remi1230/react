@@ -20,7 +20,7 @@ const DivTxtAccueil = styled.div`
     color: var(--titleText);
     width: fit-content;
     height: fit-content;
-    font-weight: 900;
+    font-weight: 600;
 `;
 
 function AccueilImage() {

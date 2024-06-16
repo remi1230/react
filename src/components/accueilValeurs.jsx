@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 
 const ComponentContainer = styled.div`
-    display: block;
-    margin: 50px 0 50px 0;
+    width: 67%;
+    margin: auto;
+     @media (max-width: 912px) {
+        width: 100%;
+    }
 `;
 const TitleValeurs = styled.div`
     font-size: 28px;

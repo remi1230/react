@@ -111,6 +111,14 @@ const ProdDetailPresentation = (props) => {
     const data = props.data;
     const [quantity, setQuantity] = useState(1);
     const formattedDescription = insertLineBreaksHTML(data.description, 60);
+
+    const breakpoints = {
+        xs: {maxWidth: '450px', coeff: 0.7},
+        sm: {maxWidth: '600px', coeff: 0.8},
+        md: {maxWidth: '900px', coeff: 0.9},
+        lg: {maxWidth: '1440px', coeff: 1},
+        xl: {maxWidth: '9999px', coeff: 1.2},
+      };
   
     return (
       <DivSuperContainer>
@@ -119,7 +127,7 @@ const ProdDetailPresentation = (props) => {
                   <CardProduit sx={{ width: 'fit-content' }}>
                       <CardContentStyled>
                       <CardProduitParameters>
-                          <Quantite quantity={quantity} setQuantity={setQuantity} />
+                          <Quantite breakpoints={breakpoints} quantity={quantity} setQuantity={setQuantity} />
                       </CardProduitParameters>
                       <ProduitsContainer>
                           <TitleProduit>{data.title}<PriceProduit>{data.price + ' €'}</PriceProduit></TitleProduit>

@@ -8,12 +8,12 @@ const ImageProduitContainer = styled.div`
     display: block;
 `;
 const TitleProduit = styled.div`
-    font-size: 18px;
+    font-size: 16px;
     color: var(--prodText);
     margin: 12px 0 12px;
 `;
 const PriceProduit = styled.div`
-    font-size: 18px;
+    font-size: 16px;
     color: var(--prodPrice);
     margin-bottom: 12px;
 `;
@@ -33,7 +33,7 @@ const ProdPresentation = (props) => {
 
   const handleImageClick = (id) => {
       navigate(`/produit/${id}`);
-    };
+  };
 
   return (
     <CardProduit sx={{ width: 275 }}  onClick={() => handleImageClick(props.id)} style={{ cursor: 'pointer' }}>

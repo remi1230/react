@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import AccueilImage from '../components/accueilImage';
-import ProdsPresentation from '../components/ProdsPresentation';
+import LastProdsPresentation from '../components/lastProdsPresentation';
 import AccueilValeurs from '../components/accueilValeurs';
 
 const DivContent = styled.div`
@@ -13,7 +13,7 @@ function Accueil() {
     <div>
       <AccueilImage />
       <DivContent>
-        <ProdsPresentation number="6" random="true" title="Nos derniers produits" />
+        <LastProdsPresentation number="6" random="true" title="Nos derniers produits" />
         <AccueilValeurs />
       </DivContent>
     </div>

@@ -4,14 +4,13 @@ import { CartContext } from './CartContext';
 import { AuthContext } from './AuthContext';
 import styled from 'styled-components';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import { useMediaQuery, CardContent, Tooltip } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 import Quantite from './quantite';
 import Button from '@mui/material/Button';
 import TrashIcon from '@mui/icons-material/DeleteForever';
 
 const CartContainer = styled.div`
-  width: 1000px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,12 +18,26 @@ const CartContainer = styled.div`
 `;
 
 const ProdDetailContainer = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 12.5% 87.5%;
   align-items: center;
+  @media (max-width: 912px) {
+    grid-template-columns: 4% 96%;
+  }
+  @media (max-width: 612px) {
+    grid-template-columns: 0% 100%;
+  }
+  @media (max-width: 472px) {
+    grid-template-columns: 0% 100%;
+  }
+  @media (max-width: 372px) {
+    grid-template-columns: 0% 100%;
+  }
 `;
 
 const ButtonContainer = styled.div`
   align-self: end;
+  justify-self: end;
 `;
 
 const CartItem = styled(Card)`
@@ -33,40 +46,41 @@ const CartItem = styled(Card)`
   height: 400px;
   margin-bottom: 20px;
   padding-right: 0px;
-  width: 80%;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--categorieBg);
   height: fit-content;
   @media (max-width: 912px) {
-    width: 70%;
+    width: 80%;
     padding-right: 10px;
   }
   @media (max-width: 612px) {
-    width: 60%;
+    width: 80%;
   }
   @media (max-width: 472px) {
-    width: 50%;
+    width: 80%;
   }
   @media (max-width: 372px) {
-    width: 45%;
+    width: 85%;
   }
 `;
 
 const CardContentStyled = styled(CardContent)`
   display: grid;
-  grid-template-columns: 90% 10%;
+  grid-template-columns: 95% 5%;
   width: 100%;
+  @media (max-width: 1600px) {
+    grid-template-columns: 95% 5%;
+  }
 `;
 
 const CartItemThumbail = styled(CardMedia)`
-  flex: 3;
   width: 100px;
   background: var(--prodBg);
   border-radius: 100%;
   padding: 7px;
   border: 4px #ccc solid;
   box-shadow: 2px 2px 5px #3e3e3e;
+  cursor: pointer;
 `;
 
 const CartItemDetails = styled.div`
@@ -75,16 +89,25 @@ const CartItemDetails = styled.div`
   margin-left: 20px;
   width: 500px;
   gap: 20px;
+  @media (max-width: 612px) {
+    width: 252px;
+    justify-self: end;
+    }
+  }
 `;
 
 const CartItemTitle = styled.h5`
   color: var(--cartItemTitle);
   margin: 0;
+  font-size: 22px;
   @media (max-width: 900px) {
-        font-size: 18px; 
-  }
-  @media (max-width: 600px) {
         font-size: 16px; 
+  }
+  @media (max-width: 612px) {
+        font-size: 14px; 
+  }
+  @media (max-width: 450px) {
+        font-size: 12px; 
   }
 `;
 
@@ -94,7 +117,7 @@ const CartItemPrice = styled.span`
   @media (max-width: 900px) {
         font-size: 16px; 
   }
-  @media (max-width: 600px) {
+  @media (max-width: 612px) {
         font-size: 14px; 
   }
 `;
@@ -104,6 +127,7 @@ const CartButton = styled(Button)`
 `;
 
 const TitlePanier = styled.h3`
+  font-weight: 600;
   color: var(--titlePanier);
   margin: 10px 0 10px;
 `;
@@ -115,21 +139,35 @@ const CaisseContainer = styled.div`
 
 const PrixTotal = styled.div`
   display: block;
+  font-weight: 600;
   margin-bottom: 0px;
   color: var(--titlePanier);
   font-weight: bold;
   @media (max-width: 900px) {
         font-size: 24px; 
   }
-  @media (max-width: 600px) {
+  @media (max-width: 612px) {
         font-size: 20px; 
   }
 `;
+
+const CustomTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .MuiTooltip-tooltip`]: {
+    fontSize        : '0.8rem',
+    fontWeight      : '700',
+    color           : 'var(--customTooltipText)',
+    backgroundColor : 'var(--customTooltipBg)',
+  },
+}));
 
 const Cart = () => {
   const { cart, removeFromCart, updateQuantity } = useContext(CartContext);
   const { isAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const matches = useMediaQuery("@media (max-width:360px)");
 
   const handleRemove = (product) => {
     removeFromCart(product);
@@ -159,30 +197,39 @@ const Cart = () => {
   }
 
   const breakpoints = {
-    xs: {maxWidth: '450px', coeff: 0.8},
-    sm: {maxWidth: '600px', coeff: 0.9},
-    md: {maxWidth: '900px', coeff: 1},
-    lg: {maxWidth: '1440px', coeff: 1.3},
-    xl: {maxWidth: '9999px', coeff: 1.6},
+    xs: {maxWidth: '450px', coeff: 0.7},
+    sm: {maxWidth: '600px', coeff: 0.8},
+    md: {maxWidth: '900px', coeff: 0.9},
+    lg: {maxWidth: '1440px', coeff: 1},
+    xl: {maxWidth: '9999px', coeff: 1.2},
   };
+
+  const handleImageClick = (id) => {
+    navigate(`/produit/${id}`);
+  };
+
+  const kartPrixTotal = cart.reduce((acc, val) => acc + (val.price * val.quantity), 0).toFixed(2) + " €";
 
   return (
     <CartContainer>
-      <TitlePanier>Mon Panier</TitlePanier>
+      <TitlePanier>Mon Panier - {kartPrixTotal}</TitlePanier>
       {cart.length === 0 ? (
         <p>Votre panier est vide</p>
       ) : (
         cart.map((product, index) => (
-          <CartItem key={product.id}>
-            <CardContentStyled>
+          <CartItem key={product.id}
+          sx={{ backgroundColor: ' background: rgb(2,0,36); background: var(--cartItemBg); ' }}>
+            <CardContentStyled sx={matches ? { paddingRight: 0, paddingLeft: '4px' } : {}}>
               <ProdDetailContainer>
-                <CartItemThumbail sx={{ width: {
-                  xs: '75px',
-                  sm: '100px',
-                  md: '120px',
-                  lg: '135px',
-                  xl: '150px',
-                }, }} key={index} component="img" image={product.thumbnail} alt={product.title} />
+                <CustomTooltip title={product.description} arrow placement="top"enterDelay={500} leaveDelay={200} >
+                  <CartItemThumbail onClick={() => handleImageClick(product.id)} sx={{ width: {
+                    xs: '100px',
+                    sm: '110px',
+                    md: '120px',
+                    lg: '135px',
+                    xl: '150px',
+                  }, }} key={index} component="img" image={product.thumbnail} alt={product.title} />
+                </CustomTooltip>
                 <CartItemDetails>
                   <CartItemTitle>{product.title}</CartItemTitle>
                   <CartItemPrice>Prix unitaire: {product.price.toFixed(2)} €</CartItemPrice>
@@ -193,7 +240,7 @@ const Cart = () => {
                     onIncrement={() => handleIncrement(product.id, product.quantity)}
                     onDecrement={() => handleDecrement(product.id, product.quantity)}
                   />
-                  <CartItemPrice>Prix total: {(product.price * product.quantity).toFixed(2)} €</CartItemPrice>
+                  <CartItemPrice>Prix total: {kartPrixTotal}</CartItemPrice>
                 </CartItemDetails>
               </ProdDetailContainer>
               <ButtonContainer>
@@ -218,11 +265,11 @@ const Cart = () => {
                     color: '--var(trashHoverColor)',
                   },
                   fontSize: {
-                    xs: '20px',  // taille de l'icône pour les écrans extra-small (mobile)
-                    sm: '24px',  // taille de l'icône pour les écrans small (tablette)
-                    md: '28px',  // taille de l'icône pour les écrans medium (bureau)
-                    lg: '32px',  // taille de l'icône pour les écrans large (bureau large)
-                    xl: '36px',  // taille de l'icône pour les écrans extra-large (bureau très large)
+                    xs: '20px',
+                    sm: '24px',
+                    md: '28px',
+                    lg: '32px',
+                    xl: '36px',
                   },
                 }}/>
                 </Button>
@@ -233,7 +280,7 @@ const Cart = () => {
       )}
       {cart.length > 0 && (
         <CaisseContainer>
-          <PrixTotal>Prix total du panier: {prixTot} €</PrixTotal>
+          <PrixTotal sx={{fontWeight: 600}}>Prix total du panier: {prixTot} €</PrixTotal>
           <CartButton sx={{ color: 'var(--addToCartTxt)', marginTop: '20px', backgroundColor: 'var(--addToCartBg)', fontWeight: 900, }} variant="contained" onClick={handleCheckout}>
             Passer à la caisse
           </CartButton>
