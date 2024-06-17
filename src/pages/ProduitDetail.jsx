@@ -41,7 +41,7 @@ function ProduitDetail() {
 
   return(
     <DivContainer>
-      <DivProduitDetailTitle>Votre choix</DivProduitDetailTitle>
+      {/* <DivProduitDetailTitle>Votre choix</DivProduitDetailTitle> */}
       <ProdDetailPresentation data={data} />
     </DivContainer>
 );

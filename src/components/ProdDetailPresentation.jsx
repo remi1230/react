@@ -7,11 +7,33 @@ import Quantite from './quantite';
 import AddToCartButton from './AddToCartButton';
 import Reviews from './Reviews';
 
+const mediaQueries = {
+    430: '99%',
+    415: '98%',
+    400: '97%',
+    385: '95%',
+    360: '90%',
+    345: '85%',
+    330: '80%',
+    315: '75%',
+    300: '70%',
+    275: '65%',
+};
+
+const generateMediaQueries = (queries) => {
+    return Object.keys(queries).sort((a, b) => b - a).map(size => `
+      @media (max-width: ${size}px) {
+        width: ${queries[size]};
+      }
+    `).join('');
+};
+
 const ProduitsContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
 `;
+
 const ImagesProduitContainer = styled.div`
     display: flex;
     justify-content: center;
@@ -20,35 +42,42 @@ const ImagesProduitContainer = styled.div`
     flex-wrap: wrap;
     width: fit-content;
 `;
+
 const TitleProduit = styled.div`
     font-size: 22px;
     color: var(--prodText);
     margin-top: 20px;
 `;
+
 const PriceProduit = styled.div`
     font-size: 18px;
     color: var(--prodPrice);
 `;
+
 const DivSuperContainer = styled.div`
     display: flex;
     flex-direction: column;
     margin-bottom: 100px;
 `;
+
 const DivContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 50px;
-    margin: auto;
     justify-content: center;
+    align-items: center;
 `;
+
 const CardProduitContainer = styled.div`
     display: flex;
     flex-direction: column;
 `;
+
 const CardProduit = styled(Card)`
     margin: auto;
     background-color: var(--cardProdBg);
 `;
+
 const CardContentStyled = styled(CardContent)`
     background: linear-gradient(42deg, rgb(2, 0, 36) 0%, rgb(41, 55, 55) 55%, rgb(179, 193, 190) 100%);
     display: flex;
@@ -56,18 +85,26 @@ const CardContentStyled = styled(CardContent)`
     justify-content: center;
     align-items: center;
 `;
+
 const CardProduitDescription = styled(Card)`
     background-color: #ddd;
 `;
+
 const CardProduitParameters = styled(Card)`
     background-color: #ddd;
 `;
+
 const CardMediaStyled = styled(CardMedia)`
     width: 275px;
 `;
+
 const ProduitDescription = styled(CardContent)`
     color: var(--importantContentText);
     font-size: 18px;
+`;
+
+const AddToCartButtonStyled = styled(AddToCartButton)`
+    ${generateMediaQueries(mediaQueries)}
 `;
 
 /**
@@ -126,24 +163,24 @@ const ProdDetailPresentation = (props) => {
               <CardProduitContainer>
                   <CardProduit sx={{ width: 'fit-content' }}>
                       <CardContentStyled>
-                      <CardProduitParameters>
-                          <Quantite breakpoints={breakpoints} quantity={quantity} setQuantity={setQuantity} />
-                      </CardProduitParameters>
-                      <ProduitsContainer>
-                          <TitleProduit>{data.title}<PriceProduit>{data.price + ' €'}</PriceProduit></TitleProduit>
-                          <ImagesProduitContainer>
-                              {data.images.map(image =>
-                                  <CardMediaStyled key={image} sx={{ width: data.images.length > 1 ? 300 : 375 }} component="img" image={image} alt={data.title} />
-                              )}
-                          </ImagesProduitContainer>
-                      </ProduitsContainer>
-                      <CardProduitDescription>
-                          <ProduitDescription dangerouslySetInnerHTML={{ __html: formattedDescription }} />
-                      </CardProduitDescription>
+                        <CardProduitParameters>
+                            <Quantite breakpoints={breakpoints} quantity={quantity} setQuantity={setQuantity} />
+                        </CardProduitParameters>
+                        <ProduitsContainer>
+                            <TitleProduit>{data.title}<PriceProduit>{data.price + ' €'}</PriceProduit></TitleProduit>
+                            <ImagesProduitContainer>
+                                {data.images.map(image =>
+                                    <CardMediaStyled key={image} sx={{ width: data.images.length > 1 ? 300 : 375 }} component="img" image={image} alt={data.title} />
+                                )}
+                            </ImagesProduitContainer>
+                        </ProduitsContainer>
+                        <CardProduitDescription>
+                            <ProduitDescription dangerouslySetInnerHTML={{ __html: formattedDescription }} />
+                        </CardProduitDescription>
                       </CardContentStyled>
                   </CardProduit>
               </CardProduitContainer>
-              <AddToCartButton product={data} quantity={quantity} />
+              <AddToCartButtonStyled product={data} quantity={quantity} />
               <Reviews data={data.reviews} />
           </DivContainer>
       </DivSuperContainer>

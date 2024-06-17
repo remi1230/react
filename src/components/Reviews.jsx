@@ -4,13 +4,32 @@ import CardContent from '@mui/material/CardContent';
 import Stars from './Stars';
 import ReviewMeta from './ReviewMeta';
 
+const mediaQueries = {
+    1545: '60%',
+    1215: '70%',
+    915: '80%',
+    615: '90%',
+    315: '100%',
+};
+
+const generateMediaQueries = (queries) => {
+    return Object.keys(queries).sort((a, b) => b - a).map(size => `
+      @media (max-width: ${size}px) {
+        width: ${queries[size]};
+      }
+    `).join('');
+};
+
 const CardReviewsContainer = styled.div`
     display: flex;
     flex-direction: column;
+    width: 50%;
+    ${generateMediaQueries(mediaQueries)}
 `;
 const CardReview = styled(Card)`
     margin: auto;
     padding: 15px;
+    width: 50%;
 `;
 const CardContentStyled = styled(CardContent)`
     margin-bottom: 20px;
@@ -34,7 +53,7 @@ const Review = (props) => {
   const data = props.data;
   return (
     <CardReviewsContainer>
-        <CardReview sx={{ width: '80%', backgroundColor: '#77aea1' }}>
+        <CardReview sx={{ width: '100%', backgroundColor: '#77aea1' }}>
             <ReviewsTitle>Vos avis</ReviewsTitle>
             {data.map((item, index) => (
                 <CardContentStyled>
