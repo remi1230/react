@@ -150,8 +150,8 @@ const ProdDetailPresentation = (props) => {
     const formattedDescription = insertLineBreaksHTML(data.description, 60);
 
     const breakpoints = {
-        xs: {maxWidth: '450px', coeff: 0.7},
-        sm: {maxWidth: '600px', coeff: 0.8},
+        xs: {maxWidth: '450px', coeff: 0.9},
+        sm: {maxWidth: '600px', coeff: 0.9},
         md: {maxWidth: '900px', coeff: 0.9},
         lg: {maxWidth: '1440px', coeff: 1},
         xl: {maxWidth: '9999px', coeff: 1.2},

@@ -1,13 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
+import ContactForm from '../components/contactForm';
+import TitlePage from '../components/TitlePage';
 
-const DivContact = styled.div`
-    margin-top: 75px;
-    font-size: 28px;
+const DivContainer = styled.div`
+  margin: 10%;
 `;
 
 function Contact() {
-  return <DivContact>Contact Page</DivContact>;
+  return (
+    <DivContainer>
+      <TitlePage title="Contactez-nous" />
+      <ContactForm></ContactForm>
+    </DivContainer>
+);
 }
 
 export default Contact;

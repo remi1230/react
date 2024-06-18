@@ -1,10 +1,8 @@
 import React, { useState, useContext } from 'react';
-import { purple, red } from '@mui/material/colors';
+import * as colors from '@mui/material/colors';
 import { CartContext } from './CartContext';
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
-
-const primary = red[500];
 
 const AddToCartButt = styled(Button)`
     width: 400px;
@@ -37,7 +35,16 @@ const AddToCartButton = ({ product, quantity, className, mediaQueries }) => {
   return (
     <AddToCartButt
       variant="contained"
-      sx={{ backgroundColor: primary }}
+      sx={{
+          fontWeight: 600,
+          color: colors.blueGrey[100],
+          backgroundColor: colors.deepOrange[400],
+          '&:hover':
+          {
+            backgroundColor: colors.deepOrange[500],
+            cursor: 'pointer',
+          },
+      }}
       onClick={handleClick}
       className={className}
       mediaQueries={mediaQueries}

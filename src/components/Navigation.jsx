@@ -10,9 +10,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 const MenuLogoLink = styled(Link)`
   text-decoration: none;
   @media (max-width: 900px) {
-    position: absolute;
-    top: 0;
-    right: 0;
+    margin-right: 17px;
   }
 `;
 const ImgLogo = styled.img`

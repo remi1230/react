@@ -9,6 +9,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Quantite from './quantite';
 import Button from '@mui/material/Button';
 import TrashIcon from '@mui/icons-material/DeleteForever';
+import TitlePage from './TitlePage';
 
 const CartContainer = styled.div`
   display: flex;
@@ -126,12 +127,6 @@ const CartButton = styled(Button)`
   
 `;
 
-const TitlePanier = styled.h3`
-  font-weight: 600;
-  color: var(--titlePanier);
-  margin: 10px 0 10px;
-`;
-
 const CaisseContainer = styled.div`
   display: block;
   margin-bottom: 100px;
@@ -141,7 +136,7 @@ const PrixTotal = styled.div`
   display: block;
   font-weight: 600;
   margin-bottom: 0px;
-  color: var(--titlePanier);
+  color: var(--categorieTitle);
   font-weight: bold;
   @media (max-width: 900px) {
         font-size: 24px; 
@@ -212,7 +207,7 @@ const Cart = () => {
 
   return (
     <CartContainer>
-      <TitlePanier>Mon Panier - {kartPrixTotal}</TitlePanier>
+      <TitlePage title={"Mon Panier - " + kartPrixTotal} />
       {cart.length === 0 ? (
         <p>Votre panier est vide</p>
       ) : (

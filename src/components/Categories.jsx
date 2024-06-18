@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import TitlePage from './TitlePage';
 import Categorie from './Categorie';
 
 const ComponentContainer = styled.div`
@@ -33,11 +34,6 @@ const ImagesContainer = styled.div`
     @media (max-width: 600px) {
         grid-template-columns: repeat(1, 1fr); 
     }
-`;
-const TitleCategories = styled.div`
-    font-size: 28px;
-    color: var(--categorieTitle);
-    margin: 25px 0 25px 0;
 `;
 
   function makeImgCatURL(imgTitle){
@@ -81,7 +77,7 @@ const TitleCategories = styled.div`
 
   return (
     <ComponentContainer>
-      <TitleCategories>{props.title}</TitleCategories>
+      <TitlePage title={props.title} />
       <ImagesSuperContainer>
         <ImagesContainer>
           {data.map((item, index) => (

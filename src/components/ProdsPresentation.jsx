@@ -3,6 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import ProdPresentation from './prodPresentation';
 import { Pagination } from '@mui/material';
+import TitlePage from './TitlePage';
 
 const ComponentContainer = styled.div`
     display: block;
@@ -108,7 +109,7 @@ const ProdsPresentation = (props) => {
 
     return (
         <ComponentContainer>
-            <TitleProduits>{props.title}</TitleProduits>
+            <TitlePage title={props.title} />
             <ImagesSuperContainer>
                 <ImagesContainer>
                     {paginatedData.map((item) => (
