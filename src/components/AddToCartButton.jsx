@@ -36,13 +36,14 @@ const AddToCartButton = ({ product, quantity, className, mediaQueries }) => {
     <AddToCartButt
       variant="contained"
       sx={{
-          fontWeight: 600,
-          color: colors.blueGrey[100],
-          backgroundColor: colors.deepOrange[400],
+          fontWeight      : 600,
+          color           : colors.deepOrange[400],
+          backgroundColor : colors.blueGrey[100],
           '&:hover':
           {
-            backgroundColor: colors.deepOrange[500],
-            cursor: 'pointer',
+            color           : colors.deepOrange[500],
+            backgroundColor : colors.blueGrey[200],
+            cursor          : 'pointer',
           },
       }}
       onClick={handleClick}

@@ -29,7 +29,8 @@ const Input = styled.input`
   font-size: 16px;
 `;
 
-const Button = styled.button`
+const ButtonConnexion = styled.button`
+  margin-top: 25px;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -37,9 +38,26 @@ const Button = styled.button`
   color: white;
   font-size: 16px;
   cursor: pointer;
+  &:hover {
+    background-color: #0056b3;
+  }
 `;
 
-const LoginPage = () => {
+const ButtonInscription = styled.button`
+  margin-top: 25px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #abc;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  &:hover {
+    background-color: #bbb;
+  }
+`;
+
+const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useContext(AuthContext);
@@ -48,9 +66,16 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login();
-    const redirectTo = location.state?.from?.pathname || '/';
-    navigate(redirectTo);
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(user => user.username === username && user.password === password);
+
+    if (user) {
+      login();
+      const redirectTo = location.state?.from?.pathname || '/';
+      navigate(redirectTo);
+    } else {
+      alert('Nom d\'utilisateur ou mot de passe incorrect');
+    }
   };
 
   return (
@@ -69,10 +94,11 @@ const LoginPage = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button type="submit">Se connecter</Button>
+        <ButtonConnexion type="submit">Se connecter</ButtonConnexion>
       </LoginForm>
+      <ButtonInscription onClick={(e) => navigate('/register')}>S'inscrire</ButtonInscription>
     </LoginContainer>
   );
 };
 
-export default LoginPage;
+export default Login;

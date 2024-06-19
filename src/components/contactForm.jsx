@@ -1,93 +1,99 @@
-import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import React, { useState } from 'react';
+import { Button, Snackbar, Alert, TextField } from '@mui/material';
+import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import styled from 'styled-components';
 
-const StyledForm = styled(Form)`
-  display: flex;
-  flex-direction: column;
-  max-width: 600px;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  background-color: #f9f9f9;
-`;
-
-const StyledLabel = styled.label`
-  margin-top: 10px;
-`;
-
-const StyledField = styled(Field)`
-  padding: 10px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
-
-const StyledErrorMessage = styled.div`
-  color: red;
-  margin-top: 5px;
-`;
-
-const StyledButton = styled.button`
-  padding: 10px;
-  margin-top: 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
+const validationSchema = Yup.object({
+  name: Yup.string().required('Required'),
+  email: Yup.string().email('Invalid email address').required('Required'),
+  message: Yup.string().required('Required'),
+});
 
 const ContactForm = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleSubmit = (values, { setSubmitting, resetForm }) => {
+    // Logique d'envoi du formulaire
+    console.log('Formulaire envoyé', values);
+    setOpen(true); // Ouvrir l'alerte après l'envoi
+    setSubmitting(false);
+    resetForm();
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false); // Fermer l'alerte
+  };
+
   return (
-    <Formik
-      initialValues={{ name: '', email: '', message: '' }}
-      validationSchema={Yup.object({
-        name: Yup.string()
-          .max(15, 'Must be 15 characters or less')
-          .required('Required'),
-        email: Yup.string()
-          .email('Invalid email address')
-          .required('Required'),
-        message: Yup.string()
-          .min(20, 'Must be 20 characters or more')
-          .required('Required'),
-      })}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          console.log(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
-      }}
-    >
-      <StyledForm>
-        <StyledLabel htmlFor="name">Nom</StyledLabel>
-        <StyledField name="name" type="text" />
-        <StyledErrorMessage>
-          <ErrorMessage name="name" />
-        </StyledErrorMessage>
-
-        <StyledLabel htmlFor="email">Email</StyledLabel>
-        <StyledField name="email" type="email" />
-        <StyledErrorMessage>
-          <ErrorMessage name="email" />
-        </StyledErrorMessage>
-
-        <StyledLabel htmlFor="message">Message</StyledLabel>
-        <StyledField name="message" as="textarea" />
-        <StyledErrorMessage>
-          <ErrorMessage name="message" />
-        </StyledErrorMessage>
-
-        <StyledButton type="submit">Envoyer</StyledButton>
-      </StyledForm>
-    </Formik>
+    <div>
+      <Formik
+        initialValues={{ name: '', email: '', message: '' }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ isSubmitting, errors, touched }) => (
+          <Form>
+            <div>
+              <Field
+                as={TextField}
+                name="name"
+                type="text"
+                label="Name"
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                error={touched.name && Boolean(errors.name)}
+                helperText={touched.name && errors.name}
+              />
+            </div>
+            <div>
+              <Field
+                as={TextField}
+                name="email"
+                type="email"
+                label="Email"
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                error={touched.email && Boolean(errors.email)}
+                helperText={touched.email && errors.email}
+              />
+            </div>
+            <div>
+              <Field
+                as={TextField}
+                name="message"
+                type="text"
+                label="Message"
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                multiline
+                rows={4}
+                error={touched.message && Boolean(errors.message)}
+                helperText={touched.message && errors.message}
+              />
+            </div>
+            <Button type="submit" variant="contained" color="primary" disabled={isSubmitting}>
+              Envoyer
+            </Button>
+          </Form>
+        )}
+      </Formik>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          Formulaire envoyé avec succès !
+        </Alert>
+      </Snackbar>
+    </div>
   );
 };
 

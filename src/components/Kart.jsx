@@ -235,7 +235,7 @@ const Cart = () => {
                     onIncrement={() => handleIncrement(product.id, product.quantity)}
                     onDecrement={() => handleDecrement(product.id, product.quantity)}
                   />
-                  <CartItemPrice>Prix total: {kartPrixTotal}</CartItemPrice>
+                  <CartItemPrice>Prix total: {(product.price * product.quantity).toFixed(2) + ' €'}</CartItemPrice>
                 </CartItemDetails>
               </ProdDetailContainer>
               <ButtonContainer>

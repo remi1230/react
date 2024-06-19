@@ -16,6 +16,7 @@ import ProduitDetail from './pages/ProduitDetail';
 import ProduitsByCategorie from './pages/ProduitsByCategorie';
 import Checkout from './pages/Checkout';
 import Login from './pages/Login';
+import Register from './pages/Register';
 
 import { CartProvider } from './components/CartContext';
 import { AuthProvider } from './components/AuthContext';
@@ -43,6 +44,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="/connexion" element={<Connexion />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
           <Footer />
         </Router>

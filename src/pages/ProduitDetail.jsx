@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import ProdDetailPresentation from '../components/ProdDetailPresentation';
+import TitlePage from '../components/TitlePage';
 
 const DivContainer = styled.div`
     margin-top: 75px;
@@ -41,7 +42,8 @@ function ProduitDetail() {
 
   return(
     <DivContainer>
-      {/* <DivProduitDetailTitle>Votre choix</DivProduitDetailTitle> */}
+      {/* <DivProduitDetailTitle>Mon panier</DivProduitDetailTitle> */}
+      <TitlePage title={"Achetez " + data.title} />
       <ProdDetailPresentation data={data} />
     </DivContainer>
 );
