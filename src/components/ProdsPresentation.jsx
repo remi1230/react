@@ -119,6 +119,7 @@ const ProdsPresentation = (props) => {
                             image={item.thumbnail}
                             title={item.title}
                             price={item.price}
+                            description={item.description}
                         />
                     ))}
                 </ImagesContainer>

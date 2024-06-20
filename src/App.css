@@ -38,8 +38,10 @@
   --cartItemTitle: #364a5a;
   --cartItemBg: linear-gradient(42deg, rgb(78, 100, 95) 0%, rgb(202, 219, 216) 35%, rgb(133, 196, 187) 100%);
   --prodBg: linear-gradient(42deg, rgb(20, 10, 36) 0%, rgb(82, 110, 110) 55%, rgb(179, 193, 190) 100%);
-  --customTooltipText: #f5ece6;
+  --customTooltipText: #f4f0ed;
   --customTooltipBg: #a5a5a5;
+  --contactFieldBg: #abc;
+  --contactFieldTxt: rgb(42, 13, 106);
 }
 
 /* ****************************** IMPORTS ********************************* */
@@ -159,6 +161,7 @@
 }
 
 html, body{
+  position: relative;
   margin: 0;
   padding: 0;
   height: 100%;
@@ -169,6 +172,10 @@ html, body{
 ul{
   margin: 0;
   padding: 0;
+}
+
+.userConnect{
+  color: red;
 }
 
 #root {

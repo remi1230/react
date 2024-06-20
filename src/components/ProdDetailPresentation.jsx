@@ -63,7 +63,7 @@ const DivSuperContainer = styled.div`
 const DivContainer = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    gap: 25px;
     justify-content: center;
     align-items: center;
 `;
@@ -74,6 +74,7 @@ const CardProduitContainer = styled.div`
 `;
 
 const CardProduit = styled(Card)`
+    width: 50%;
     margin: auto;
     background-color: var(--cardProdBg);
 `;
@@ -100,7 +101,7 @@ const CardMediaStyled = styled(CardMedia)`
 
 const ProduitDescription = styled(CardContent)`
     color: var(--importantContentText);
-    font-size: 18px;
+    font-size: 1rem;
 `;
 
 const AddToCartButtonStyled = styled(AddToCartButton)`
@@ -160,6 +161,7 @@ const ProdDetailPresentation = (props) => {
     return (
       <DivSuperContainer>
           <DivContainer>
+              <AddToCartButtonStyled product={data} quantity={quantity} />
               <CardProduitContainer>
                   <CardProduit sx={{ width: 'fit-content' }}>
                       <CardContentStyled>
@@ -170,7 +172,7 @@ const ProdDetailPresentation = (props) => {
                             <TitleProduit>{data.title}<PriceProduit>{data.price + ' €'}</PriceProduit></TitleProduit>
                             <ImagesProduitContainer>
                                 {data.images.map(image =>
-                                    <CardMediaStyled key={image} sx={{ width: data.images.length > 1 ? 300 : 375 }} component="img" image={image} alt={data.title} />
+                                    <CardMediaStyled key={image} sx={{ width: 300 }} component="img" image={image} alt={data.title} />
                                 )}
                             </ImagesProduitContainer>
                         </ProduitsContainer>
@@ -180,7 +182,6 @@ const ProdDetailPresentation = (props) => {
                       </CardContentStyled>
                   </CardProduit>
               </CardProduitContainer>
-              <AddToCartButtonStyled product={data} quantity={quantity} />
               <Reviews data={data.reviews} />
           </DivContainer>
       </DivSuperContainer>

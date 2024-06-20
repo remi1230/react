@@ -107,7 +107,7 @@ const LastProdsPresentation = () => {
       <ImagesSuperContainer>
         <ImagesContainer>
           {data.map(item => (
-            <ProdPresentation id={item.id} image={item.images[0]} title={item.title} price={item.price} />
+            <ProdPresentation id={item.id} image={item.images[0]} title={item.title} price={item.price} description={item.description}/>
           ))}
         </ImagesContainer>
       </ImagesSuperContainer>

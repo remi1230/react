@@ -6,7 +6,7 @@ import TitlePage from './TitlePage';
 
 const ComponentContainer = styled.div`
     display: block;
-    margin: 50px 0 50px 0;
+    margin: 50px 0 500px 0;
 `;
 const ImagesSuperContainer = styled.div`
     display: flex;
@@ -75,7 +75,7 @@ const ProdsPresentation = (props) => {
       <ImagesSuperContainer>
         <ImagesContainer>
           {data.map(item => (
-            <ProdPresentation id={item.id} image={item.thumbnail} title={item.title} price={item.price} />
+            <ProdPresentation id={item.id} image={item.thumbnail} title={item.title} price={item.price} description={item.description} />
           ))}
         </ImagesContainer>
       </ImagesSuperContainer>

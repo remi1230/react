@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import { Button, Snackbar, Alert, TextField } from '@mui/material';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
@@ -8,6 +9,17 @@ const validationSchema = Yup.object({
   email: Yup.string().email('Invalid email address').required('Required'),
   message: Yup.string().required('Required'),
 });
+
+const StyledTextField = styled(TextField)`
+  background-color: var(--contactFieldBg);
+  & .MuiInputBase-input {
+    color: var(--contactFieldTxt);
+  }
+`;
+
+const DivFieldsContainer = styled.div`
+  margin-bottom: 25px;
+`;
 
 const ContactForm = () => {
   const [open, setOpen] = useState(false);
@@ -34,49 +46,57 @@ const ContactForm = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting, errors, touched }) => (
+        {({ isSubmitting, errors, touched, handleChange, handleBlur, values }) => (
           <Form>
-            <div>
-              <Field
-                as={TextField}
-                name="name"
-                type="text"
-                label="Name"
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                error={touched.name && Boolean(errors.name)}
-                helperText={touched.name && errors.name}
-              />
-            </div>
-            <div>
-              <Field
-                as={TextField}
-                name="email"
-                type="email"
-                label="Email"
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                error={touched.email && Boolean(errors.email)}
-                helperText={touched.email && errors.email}
-              />
-            </div>
-            <div>
-              <Field
-                as={TextField}
-                name="message"
-                type="text"
-                label="Message"
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                multiline
-                rows={4}
-                error={touched.message && Boolean(errors.message)}
-                helperText={touched.message && errors.message}
-              />
-            </div>
+            <DivFieldsContainer>
+              <div>
+                <StyledTextField
+                  name="name"
+                  type="text"
+                  label="Name"
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  error={touched.name && Boolean(errors.name)}
+                  helperText={touched.name && errors.name}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.name}
+                />
+              </div>
+              <div>
+                <StyledTextField
+                  name="email"
+                  type="email"
+                  label="Email"
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  error={touched.email && Boolean(errors.email)}
+                  helperText={touched.email && errors.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.email}
+                />
+              </div>
+              <div>
+                <StyledTextField
+                  name="message"
+                  type="text"
+                  label="Message"
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  multiline
+                  rows={4}
+                  error={touched.message && Boolean(errors.message)}
+                  helperText={touched.message && errors.message}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.message}
+                />
+              </div>
+            </DivFieldsContainer>
             <Button type="submit" variant="contained" color="primary" disabled={isSubmitting}>
               Envoyer
             </Button>

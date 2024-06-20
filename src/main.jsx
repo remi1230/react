@@ -1,8 +1,7 @@
-import { useState } from 'react'
-import './App.css'
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import './App.css';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import Footer from './components/footer';
 import Accueil from './pages/Accueil';
@@ -17,9 +16,22 @@ import ProduitsByCategorie from './pages/ProduitsByCategorie';
 import Checkout from './pages/Checkout';
 import Login from './pages/Login';
 import Register from './pages/Register';
-
 import { CartProvider } from './components/CartContext';
 import { AuthProvider } from './components/AuthContext';
+
+const Layout = ({ children }) => (
+  <>
+    <header>
+      <Navigation />
+    </header>
+    <main>
+      {children}
+    </main>
+    <footer>
+      <Footer />
+    </footer>
+  </>
+);
 
 let link = document.createElement('link');
 link.rel  = 'stylesheet';
@@ -31,22 +43,22 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <AuthProvider>
       <CartProvider>
         <Router>
-          <Navigation />
-          <Routes>
-            <Route exact path="/" element={<Accueil />} />
-            <Route path="/produits" element={<Produits />} />
-            <Route path="/produit/:id" element={<ProduitDetail />} />
-            <Route path="/categorie/:categorie" element={<ProduitsByCategorie />} />
-            <Route path="/categories" element={<Categories />} />
-            <Route path="/favorite" element={<Favorite />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/connexion" element={<Connexion />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Routes>
-          <Footer />
+          <Layout>
+            <Routes>
+              <Route exact path="/" element={<Accueil />} />
+              <Route path="/produits" element={<Produits />} />
+              <Route path="/produit/:id" element={<ProduitDetail />} />
+              <Route path="/categorie/:categorie" element={<ProduitsByCategorie />} />
+              <Route path="/categories" element={<Categories />} />
+              <Route path="/favorite" element={<Favorite />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/connexion" element={<Connexion />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+            </Routes>
+          </Layout>
         </Router>
       </CartProvider>
     </AuthProvider>

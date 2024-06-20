@@ -10,7 +10,6 @@ const ComponentContainer = styled.div`
 const TitleValeurs = styled.div`
     font-size: 28px;
     color: var(--prodsTitle);
-    margin-bottom: 15px;
 `;
 const ContentValeurs = styled.div`
     width: 100%;
@@ -27,12 +26,12 @@ const ParagraphTitleValeur = styled.p`
     line-height: 1.6;
 `;
 const ParagraphValeur = styled.p`
-    margin-bottom: 10px;
     text-align: center;
 `;
 const TitleValeur = styled.p`
     text-align: center;
     font-size: 24px;
+    font-weight: 500;
 `;
 
 const AccueilValeurs = () => {
