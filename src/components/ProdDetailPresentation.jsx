@@ -172,7 +172,13 @@ const ProdDetailPresentation = (props) => {
                             <TitleProduit>{data.title}<PriceProduit>{data.price + ' €'}</PriceProduit></TitleProduit>
                             <ImagesProduitContainer>
                                 {data.images.map(image =>
-                                    <CardMediaStyled key={image} sx={{ width: 300 }} component="img" image={image} alt={data.title} />
+                                    <CardMediaStyled key={image} sx={{ width: 300, width: {
+                                        xs: '150px',  // 0px to 600px
+                                        sm: '200px',   // 600px to 960px
+                                        md: '250px',   // 960px to 1280px
+                                        lg: '300px',   // 1280px to 1920px
+                                        xl: '300px',   // 1920px and up
+                                      }, }} component="img" image={image} alt={data.title} />
                                 )}
                             </ImagesProduitContainer>
                         </ProduitsContainer>

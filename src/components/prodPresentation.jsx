@@ -49,7 +49,7 @@ const ProdPresentation = (props) => {
   };
 
   return (
-    <CardProduit sx={{ width: 275 }}  onClick={() => handleImageClick(props.id)} style={{ cursor: 'pointer' }}>
+    <CardProduit key={props.id} sx={{ width: 275 }}  onClick={() => handleImageClick(props.id)} style={{ cursor: 'pointer' }}>
         <CardContentStyled>
           <CustomTooltip title={props.description} arrow placement="top"enterDelay={500} leaveDelay={200} >
             <ImageProduitContainer>

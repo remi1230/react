@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -68,9 +69,14 @@ class RandomNumberGenerator {
 const rng = new RandomNumberGenerator();
 
 const LastProdsPresentation = () => {
-  const [data, setData]       = useState([]);
+  let [data, setData]         = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError]     = useState(null);
+
+  data = data.map(item => ({
+    ...item,
+    uniqueId: uuidv4(),
+  }));
 
   useEffect(() => {
     // Fonction pour récupérer les données
@@ -107,7 +113,7 @@ const LastProdsPresentation = () => {
       <ImagesSuperContainer>
         <ImagesContainer>
           {data.map(item => (
-            <ProdPresentation id={item.id} image={item.images[0]} title={item.title} price={item.price} description={item.description}/>
+            <ProdPresentation key={item.uniqueId} id={item.id} image={item.images[0]} title={item.title} price={item.price} description={item.description}/>
           ))}
         </ImagesContainer>
       </ImagesSuperContainer>

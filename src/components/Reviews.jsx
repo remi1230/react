@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -50,17 +51,20 @@ const ReviewsTitle = styled.div`
 
 
 const Review = (props) => {
-  const data = props.data;
+  const data = props.data.map(item => ({
+      ...item,
+      id: uuidv4(),
+  }));
   return (
     <CardReviewsContainer>
         <CardReview sx={{ width: '100%', backgroundColor: '#77aea1' }}>
             <ReviewsTitle>Vos avis</ReviewsTitle>
-            {data.map((item, index) => (
-                <CardContentStyled>
+            {data.map((item) => (
+                <CardContentStyled key={item.id}>
                     <CardReviewDescription>
-                        <ReviewMeta reviewerName={item.reviewerName} date={item.date} key={index} />
-                        <Stars number={item.rating} key={index} />
-                        <ReviewDescription key={index}>{item.comment}</ReviewDescription>
+                        <ReviewMeta reviewerName={item.reviewerName} date={item.date} />
+                        <Stars number={item.rating} />
+                        <ReviewDescription>{item.comment}</ReviewDescription>
                     </CardReviewDescription>
                 </CardContentStyled>
             ))}
