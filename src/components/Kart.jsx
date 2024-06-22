@@ -179,7 +179,7 @@ const Cart = () => {
   };
 
   const handleCheckout = () => {
-    if (!isAuthenticated) {
+    if (!localStorage.user) {
       navigate('/login', { state: { from: { pathname: '/checkout' } } });
     } else {
       navigate('/checkout');

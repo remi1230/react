@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '/logo.png';
@@ -6,7 +6,6 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import EmailIcon from '@mui/icons-material/Email';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { AuthContext } from './AuthContext';
 
 const MenuLogoLink = styled(Link)`
   text-decoration: none;
@@ -126,8 +125,8 @@ const Burger = styled.div`
 `;
 
 function Navigation() {
-  const [open, setOpen]     = useState(false);
-  const { isAuthenticated } = useContext(AuthContext);
+  const [open, setOpen] = useState(false);
+  const isAuthenticated = localStorage.user;
 
   return (
     <NavMenu>
@@ -153,7 +152,7 @@ function Navigation() {
         <ItemMenuContainerThirdLine>
           <LiIconMenu>
             <MenuIconLink to="/cart"><SpanIcon className="material-icons"><ShoppingCartIcon fontSize="large"/></SpanIcon></MenuIconLink>
-            <MenuIconLink to="/favorite"><SpanIcon className="material-icons"><FavoriteIcon fontSize="large"/></SpanIcon></MenuIconLink>
+            {/* <MenuIconLink to="/favorite"><SpanIcon className="material-icons"><FavoriteIcon fontSize="large"/></SpanIcon></MenuIconLink> */}
             <MenuIconLink to="/contact"><SpanIcon className="material-icons"><EmailIcon fontSize="large"/></SpanIcon></MenuIconLink>
             <MenuIconLink to="/login" className={isAuthenticated ? 'userConnect' : ''}><SpanIcon className="material-icons"><AccountCircleIcon fontSize="large"/></SpanIcon></MenuIconLink>
           </LiIconMenu>

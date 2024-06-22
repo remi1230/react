@@ -39,39 +39,6 @@ const ImagesContainer = styled.div`
     }
 `;
 
-const TitleProduits = styled.div`
-    font-size: 28px;
-    color: var(--prodsTitle);
-    margin: 25px 0 25px 0;
-`;
-
-class RandomNumberGenerator {
-    constructor() {
-        this.reset();
-    }
-
-    reset() {
-        this.numbers = Array.from({ length: 30 }, (_, i) => i);
-        this.shuffle(this.numbers);
-    }
-
-    shuffle(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-    }
-
-    getNextNumber() {
-        if (this.numbers.length === 0) {
-            this.reset();
-        }
-        return this.numbers.pop();
-    }
-}
-
-const rng = new RandomNumberGenerator();
-
 const ProdsPresentation = (props) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -81,8 +48,9 @@ const ProdsPresentation = (props) => {
 
     useEffect(() => {
         const fetchData = async () => {
+            setLoading(true);
             try {
-                const response = await axios.get('https://dummyjson.com/products?limit=0');
+                const response = await axios.get(`https://dummyjson.com/products?skip=${(page - 1) * itemsPerPage}&limit=${itemsPerPage}`);
                 if (Array.isArray(response.data.products)) {
                     setData(response.data.products);
                 } else {
@@ -96,13 +64,11 @@ const ProdsPresentation = (props) => {
         };
 
         fetchData();
-    }, []);
+    }, [page]);
 
     const handleChange = (event, value) => {
         setPage(value);
     };
-
-    const paginatedData = data.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
@@ -112,7 +78,7 @@ const ProdsPresentation = (props) => {
             <TitlePage title={props.title} />
             <ImagesSuperContainer>
                 <ImagesContainer>
-                    {paginatedData.map((item) => (
+                    {data.map((item) => (
                         <ProdPresentation
                             key={item.id}
                             id={item.id}
@@ -125,7 +91,7 @@ const ProdsPresentation = (props) => {
                 </ImagesContainer>
             </ImagesSuperContainer>
             <Pagination
-                count={Math.ceil(data.length / itemsPerPage)}
+                count={Math.ceil(100 / itemsPerPage)} // Assuming there are 100 products in total
                 page={page}
                 onChange={handleChange}
                 sx={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}

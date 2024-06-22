@@ -1,24 +1,40 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
+import axios from 'axios';
 
-// Créez le contexte d'authentification
 export const AuthContext = createContext();
 
-// Créez un fournisseur de contexte
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
 
-  // Fonction pour se connecter
-  const login = () => {
-    setIsAuthenticated(true);
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  const login = async (username, password) => {
+    try {
+      const response = await axios.post('https://dummyjson.com/auth/login', {
+        username,
+        password
+      });
+      setUser(response.data);
+      localStorage.setItem('user', JSON.stringify(response.data));
+      return { success: true, data: response.data };
+    } catch (error) {
+      return { success: false, error: error.response ? error.response.data : 'Login failed' };
+    }
   };
 
-  // Fonction pour se déconnecter
   const logout = () => {
-    setIsAuthenticated(false);
+    setUser(null);
+    localStorage.removeItem('user');
+    window.location.reload();
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

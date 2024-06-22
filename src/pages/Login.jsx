@@ -43,38 +43,36 @@ const ButtonConnexion = styled.button`
   }
 `;
 
-const ButtonInscription = styled.button`
+const ButtonDeconnexion = styled.button`
   margin-top: 25px;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #abc;
+  background-color: #007bff;
   color: white;
   font-size: 16px;
   cursor: pointer;
   &:hover {
-    background-color: #bbb;
+    background-color: #0056b3;
   }
 `;
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useContext(AuthContext);
+  const { login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    const user = users.find(user => user.username === username && user.password === password);
-
-    if (user) {
-      login();
+    const result = await login(username, password);
+    if (result.success) {
       const redirectTo = location.state?.from?.pathname || '/';
       navigate(redirectTo);
+      window.location.href = redirectTo;
     } else {
-      alert('Nom d\'utilisateur ou mot de passe incorrect');
+      alert(`Informations de connexion incorrectes`);
     }
   };
 
@@ -96,7 +94,7 @@ const Login = () => {
         />
         <ButtonConnexion type="submit">Se connecter</ButtonConnexion>
       </LoginForm>
-      <ButtonInscription onClick={(e) => navigate('/register')}>S'inscrire</ButtonInscription>
+      <ButtonDeconnexion onClick={ logout }>Se Déconnecter</ButtonDeconnexion>
     </LoginContainer>
   );
 };
