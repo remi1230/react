@@ -41,7 +41,10 @@
   --customTooltipText: #f4f0ed;
   --customTooltipBg: #a5a5a5;
   --contactFieldBg: #abc;
+  --contactFieldBgFocused: #abc;
+  --contactFieldBorderFocused: #abc;
   --contactFieldTxt: rgb(42, 13, 106);
+  --contactFieldTxtFocused: rgb(42, 13, 106);
 }
 
 /* ****************************** IMPORTS ********************************* */
@@ -172,6 +175,15 @@ html, body{
 ul{
   margin: 0;
   padding: 0;
+}
+
+/* Cible les icônes de carte à l'intérieur du composant CardElement */
+.StripeElement--base .__PrivateStripeElement iframe {
+  height: 1.6em !important; /* Ajuste la hauteur de l'icône */
+}
+
+.StripeElement--base .__PrivateStripeElement iframe {
+  width: 1.6em !important; /* Ajuste la largeur de l'icône */
 }
 
 .userConnect{
