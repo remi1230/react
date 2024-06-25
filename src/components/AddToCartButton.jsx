@@ -7,8 +7,6 @@ import Button from '@mui/material/Button';
 const AddToCartButt = styled(Button)`
     width: 400px;
     font-size: 18px;
-    background-color: var(--addToCartBg);
-    color: var(--addToCartTxt);
     font-weight: bold;
     margin: auto;
     margin-top: -25px;

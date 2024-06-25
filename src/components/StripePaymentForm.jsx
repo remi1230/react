@@ -3,8 +3,6 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import styled from 'styled-components';
 
-const stripePromise = loadStripe('pk_test_51PVFKgFIKwAXFKFkLw042PAD3owEteum3TVWJZ18rDI82Kn5RBwEpTBvv59Jy2W1Copfmq4IykmNmvSCtyJMzFHt00cFI4RZrV');
-
 const FormWrapper = styled.div`
   margin: 0 auto;
   padding: 20px 20px 0px 20px;
@@ -45,9 +43,20 @@ const options = {
   }
 };
 
-const StripePaymentForm = () => {
-  const stripe = useStripe();
+const StripePaymentForm = ({ onCardComplete }) => {
+  const stripe   = useStripe();
   const elements = useElements();
+
+  const handleCardDetailsChange = (event) => {
+    // Vous pouvez vérifier event.complete pour voir si tous les champs de la carte sont valides
+    if (event.complete) {
+      console.log('Les détails de la carte sont complets et valides.');
+      onCardComplete(true);
+    } else if (event.error) {
+      console.error('Erreur lors de la saisie de la carte:', event.error.message);
+      onCardComplete(false);
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -75,7 +84,7 @@ const StripePaymentForm = () => {
       <form onSubmit={handleSubmit}>
         <FormField>
           <CardElementWrapper>
-            <CardElement options={options} />
+            <CardElement options={options} onChange={handleCardDetailsChange} />
           </CardElementWrapper>
         </FormField>
       </form>
@@ -83,10 +92,12 @@ const StripePaymentForm = () => {
   );
 };
 
-const App = () => (
+export default StripePaymentForm;
+
+/*const App = () => (
   <Elements stripe={stripePromise}>
     <StripePaymentForm />
   </Elements>
 );
 
-export default App;
+export default App;*/

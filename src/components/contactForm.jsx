@@ -36,7 +36,7 @@ const ContactForm = () => {
     if (reason === 'clickaway') {
       return;
     }
-    setOpen(false); // Fermer l'alerte
+    setOpen(false);
   };
 
   return (
@@ -53,7 +53,7 @@ const ContactForm = () => {
                 <StyledTextField
                   name="name"
                   type="text"
-                  label="Name"
+                  label="Nom"
                   variant="outlined"
                   margin="normal"
                   fullWidth

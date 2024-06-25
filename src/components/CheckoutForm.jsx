@@ -1,20 +1,31 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
+import * as colors from '@mui/material/colors';
 import { Button, Snackbar, Alert, TextField, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-//import PaymentForm from './PaymentForm';
 import StripePaymentForm from './StripePaymentForm';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+
+const stripePromise = loadStripe('pk_test_51PVFKgFIKwAXFKFkLw042PAD3owEteum3TVWJZ18rDI82Kn5RBwEpTBvv59Jy2W1Copfmq4IykmNmvSCtyJMzFHt00cFI4RZrV');
 
 const validationSchema = Yup.object({
-  name: Yup.string().required('Required'),
+  nom: Yup.string().required('Required'),
+  prenom: Yup.string().required('Required'),
+  adresse: Yup.string().required('Required'),
+  cp: Yup.string().required('Required'),
+  ville: Yup.string().required('Required'),
+  tel: Yup.string().required('Required'),
   email: Yup.string().email('Invalid email address').required('Required'),
-  message: Yup.string().required('Required'),
   pays: Yup.string().required('Required'),
-  expirationDate: Yup.string()
-    .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, "Format MM/AA requis")
-    .required('Date d\'expiration requise'),
 });
+
+const Title = styled.h4`
+    color: var(--contactFieldTxt);
+    font-weight: 600;
+    margin: 0 0 10px;
+`;
 
 const StyledTextField = styled(TextField)`
   background-color: var(--contactFieldBg);
@@ -27,43 +38,20 @@ const StyledTextField = styled(TextField)`
   & .MuiInputLabel-root {
     color: var(--contactFieldTxt);
   }
-
-  /* Masquer le texte jj/mm/aaaa sans masquer le label */
-  & input[type="date"]::-webkit-datetime-edit-text {
-    opacity: 0;
-  }
-
-  & input[type="date"]::-webkit-datetime-edit-month-field,
-  & input[type="date"]::-webkit-datetime-edit-day-field,
-  & input[type="date"]::-webkit-datetime-edit-year-field {
-    color: var(--contactFieldTxt);
-  }
-
-  & input[type="date"]::-webkit-inner-spin-button,
-  & input[type="date"]::-webkit-clear-button {
-    display: none;
-  }
-
-  /* Pour les autres navigateurs */
-  & input[type="date"]::-moz-placeholder {
-    opacity: 0;
-  }
-  
-  & input[type="date"]::-ms-input-placeholder {
-    opacity: 0;
-  }
-  
-  & input[type="date"]::placeholder {
-    opacity: 0;
-  }
 `;
 
 const DivFieldsContainer = styled.div`
   margin-bottom: 25px;
+  @media (max-width: 580px) {
+      width: 97%;
+  }
 `;
 const DivField = styled.div`
   display: flex;
   gap: 10px;
+  @media (max-width: 750px) {
+      display: block;
+  }
 `;
 
 const SubTitleForm = styled.div`
@@ -95,8 +83,19 @@ const StyledSelect = styled(Select)`
   }
 `;
 
-const ContactForm = () => {
-  const [open, setOpen] = useState(false);
+const ComponentContainer = styled.div`
+  @media (max-width: 580px) {
+      align-self: center; 
+  }
+`;
+
+const PaymentButton = styled(Button)`
+  width: 50%;
+`;
+
+const CheckoutForm = () => {
+  const [open, setOpen]             = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const handleSubmit = (values, { setSubmitting, resetForm }) => {
     // Logique d'envoi du formulaire
@@ -113,10 +112,21 @@ const ContactForm = () => {
     setOpen(false); // Fermer l'alerte
   };
 
+  const handleCardComplete = (isComplete) => {
+    console.log("Card is complete:", isComplete);
+    if(isComplete){
+      setIsDisabled(false);
+    }
+    else{
+      setIsDisabled(true);
+    }
+  };
+
   return (
-    <div>
+    <ComponentContainer>
+      <Title>Mes informations</Title>
       <Formik
-        initialValues={{ name: '', email: '', message: '', pays: '', expirationDate: '' }}
+        initialValues={{ nom: '', prenom: '', email: '', adresse: '', cp: '', ville: '', tel: '' }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
@@ -126,17 +136,17 @@ const ContactForm = () => {
               <SubTitleForm>Contact</SubTitleForm>
               <DivField>
                 <StyledTextField
-                  name="contact"
+                  name="email"
                   type="text"
                   label="Email"
                   variant="outlined"
                   margin="normal"
                   fullWidth
-                  error={touched.contact && Boolean(errors.contact)}
-                  helperText={touched.contact && errors.contact}
+                  error={touched.email && Boolean(errors.email)}
+                  helperText={touched.email && errors.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.contact}
+                  value={values.email}
                 />
               </DivField>
               <SubTitleForm>Livraison</SubTitleForm>
@@ -246,12 +256,23 @@ const ContactForm = () => {
                 />
               </DivField>
               <SubTitleForm>Paiement</SubTitleForm>
-              {/*<PaymentForm />*/}
-              <StripePaymentForm />
+              <Elements stripe={stripePromise}>
+                <StripePaymentForm onCardComplete={handleCardComplete} />
+              </Elements>
             </DivFieldsContainer>
-            <Button type="submit" variant="contained" color="primary" disabled={isSubmitting}>
+            <PaymentButton id="paymentButton" sx={{
+                  fontWeight      : 600,
+                  color           : colors.deepOrange[400],
+                  backgroundColor : colors.blueGrey[100],
+                  '&:hover':
+                  {
+                    color           : colors.deepOrange[500],
+                    backgroundColor : colors.blueGrey[200],
+                    cursor          : 'pointer',
+                  },
+              }} type="submit" variant="contained" disabled={isDisabled}>
               PAYER
-            </Button>
+            </PaymentButton>
           </Form>
         )}
       </Formik>
@@ -265,7 +286,7 @@ const ContactForm = () => {
           Paiement effectué !
         </Alert>
       </Snackbar>
-    </div>
+    </ComponentContainer>
   );
 };
 
@@ -305,4 +326,4 @@ const pays = [
   'Zimbabwe'
 ];
 
-export default ContactForm;
+export default CheckoutForm;
