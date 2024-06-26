@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import ParaphValeur from './ParagraphValeur';
 
 const ComponentContainer = styled.div`
     width: 67%;
@@ -24,17 +25,12 @@ const ParagraphTitleValeur = styled.p`
     color: var(--valeursTxt);
     font-size: 18px;
     line-height: 1.6;
-`;
-const ParagraphValeur = styled.p`
-    text-align: center;
-`;
-const TitleValeur = styled.p`
-    text-align: center;
-    font-size: 24px;
-    font-weight: 500;
+    margin-bottom: 50px;
 `;
 
 const AccueilValeurs = () => {
+  const imgBasePath = "../../public/images/valeurs/";
+
   return (
     <ComponentContainer>
       <TitleValeurs>Nos valeurs</TitleValeurs>
@@ -49,38 +45,14 @@ const AccueilValeurs = () => {
             En tant que pionniers et autorités de l'éco-mode, nous sommes excités de conduire le changement que nous souhaitons tous voir dans le monde.
       </ParagraphTitleValeur>
       <ContentValeurs>
-        <TitleValeur>Service client exceptionnel</TitleValeur>
-        <ParagraphValeur>
-            Nous nous engageons à offrir un service client de qualité, prêt à répondre à toutes vos questions et à résoudre vos problèmes rapidement et efficacement.
-        </ParagraphValeur>
-        <TitleValeur>Qualité des produits</TitleValeur>
-        <ParagraphValeur>
-            Nous sélectionnons soigneusement nos produits pour garantir qu'ils répondent aux normes les plus élevées de qualité et de durabilité.
-        </ParagraphValeur>
-        <TitleValeur>Innovation</TitleValeur>
-        <ParagraphValeur>
-            Nous utilisons les technologies les plus avancées pour améliorer votre expérience de shopping et introduire de nouvelles fonctionnalités innovantes.
-        </ParagraphValeur>
-        <TitleValeur>Sécurité des transactions</TitleValeur>
-        <ParagraphValeur>
-            Nous prenons la sécurité de vos informations personnelles très au sérieux et utilisons des mesures de sécurité de pointe pour protéger vos données.
-        </ParagraphValeur>
-        <TitleValeur>Diversité et inclusion</TitleValeur>
-        <ParagraphValeur>
-            Nous valorisons la diversité et nous nous efforçons de créer un environnement inclusif où tout le monde se sent bienvenu.
-        </ParagraphValeur>
-        <TitleValeur>Développement durable</TitleValeur>
-        <ParagraphValeur>
-            Nous nous engageons à adopter des pratiques respectueuses de l'environnement pour contribuer à un avenir durable.
-        </ParagraphValeur>
-        <TitleValeur>Transparence</TitleValeur>
-        <ParagraphValeur>
-            Nous croyons en une communication honnête et ouverte avec nos clients. Vous pouvez toujours compter sur nous pour être clairs et transparents sur nos politiques et nos prix.
-        </ParagraphValeur>
-        <TitleValeur>Engagement communautaire</TitleValeur>
-        <ParagraphValeur>
-            Nous soutenons activement les communautés locales et nous investissons dans des initiatives qui ont un impact positif sur la société.
-        </ParagraphValeur>
+        <ParaphValeur logo={`${imgBasePath}serviceClient.png`} title="Service client exceptionnel" text="Nous nous engageons à offrir un service client de qualité, prêt à répondre à toutes vos questions et à résoudre vos problèmes rapidement et efficacement."></ParaphValeur>
+        <ParaphValeur logo={`${imgBasePath}qualiteProduit.png`} title="Qualité des produits" text="Nous sélectionnons soigneusement nos produits pour garantir qu'ils répondent aux normes les plus élevées de qualité et de durabilité."></ParaphValeur>
+        <ParaphValeur logo={`${imgBasePath}innovation.png`} title="Innovation" text="Nous utilisons les technologies les plus avancées pour améliorer votre expérience de shopping et introduire de nouvelles fonctionnalités innovantes."></ParaphValeur>
+        <ParaphValeur logo={`${imgBasePath}securiteTransaction.png`} title="Sécurité des transactions" text="Nous prenons la sécurité de vos informations personnelles très au sérieux et utilisons des mesures de sécurité de pointe pour protéger vos données."></ParaphValeur>
+        <ParaphValeur logo={`${imgBasePath}diversiteInclusion.png`} title="Diversité et inclusion" text="Nous valorisons la diversité et nous nous efforçons de créer un environnement inclusif où tout le monde se sent bienvenu."></ParaphValeur>
+        <ParaphValeur logo={`${imgBasePath}developpementDurable.png`} title="Développement durable" text="Nous nous engageons à adopter des pratiques respectueuses de l'environnement pour contribuer à un avenir durable."></ParaphValeur>
+        <ParaphValeur logo={`${imgBasePath}transparence.png`} title="Transparence" text="Nous croyons en une communication honnête et ouverte avec nos clients. Vous pouvez toujours compter sur nous pour être clairs et transparents sur nos politiques et nos prix."></ParaphValeur>
+        <ParaphValeur logo={`${imgBasePath}engagementCommunotaire.png`} title="Engagement communautaire" text="Nous soutenons activement les communautés locales et nous investissons dans des initiatives qui ont un impact positif sur la société."></ParaphValeur>
       </ContentValeurs>
     </ComponentContainer>
   );

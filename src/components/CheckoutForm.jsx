@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import * as colors from '@mui/material/colors';
 import { Button, Snackbar, Alert, TextField, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
@@ -7,6 +8,7 @@ import * as Yup from 'yup';
 import StripePaymentForm from './StripePaymentForm';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
+import { CartContext } from './CartContext';
 
 const stripePromise = loadStripe('pk_test_51PVFKgFIKwAXFKFkLw042PAD3owEteum3TVWJZ18rDI82Kn5RBwEpTBvv59Jy2W1Copfmq4IykmNmvSCtyJMzFHt00cFI4RZrV');
 
@@ -96,6 +98,8 @@ const PaymentButton = styled(Button)`
 const CheckoutForm = () => {
   const [open, setOpen]             = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
+  const { cart, removeFromCart }    = useContext(CartContext);
+  const navigate                    = useNavigate();
 
   const handleSubmit = (values, { setSubmitting, resetForm }) => {
     // Logique d'envoi du formulaire
@@ -110,6 +114,8 @@ const CheckoutForm = () => {
       return;
     }
     setOpen(false); // Fermer l'alerte
+    cart.forEach(produit => { removeFromCart(produit); });
+    navigate('/');
   };
 
   const handleCardComplete = (isComplete) => {
@@ -278,7 +284,7 @@ const CheckoutForm = () => {
       </Formik>
       <Snackbar
         open={open}
-        autoHideDuration={6000}
+        autoHideDuration={2000}
         onClose={handleClose}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       >

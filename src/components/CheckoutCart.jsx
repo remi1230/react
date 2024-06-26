@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { CartContext } from './CartContext';
 import Card from '@mui/material/Card';
@@ -122,25 +123,14 @@ const QuantiteNumber = styled.div`
     font-size: 0.9rem;
 `;
 
-const PrixTotal = styled.div`
-  display: block;
-  font-weight: 600;
-  margin-bottom: 0px;
-  color: var(--categorieTitle);
-  font-weight: bold;
-  @media (max-width: 900px) {
-        font-size: 24px; 
-  }
-  @media (max-width: 612px) {
-        font-size: 20px; 
-  }
-`;
-
 
 const CheckoutCart = () => {
-    
     const { cart } = useContext(CartContext);
-    const prixTot  = cart.reduce((acc, val) => acc + (val.price * val.quantity), 0).toFixed(2);
+
+    const navigate = useNavigate();
+    const handleImageClick = (id) => {
+      navigate(`/produit/${id}`);
+    };
   
     return (
       <div>
@@ -154,7 +144,7 @@ const CheckoutCart = () => {
                 </QuantiteContainer>
                 <CardContentStyled>
                 <ProdDetailContainer>
-                <CartItemThumbail onClick={() => handleImageClick(product.id)} sx={{ width: {
+                  <CartItemThumbail onClick={() => handleImageClick(product.id)} sx={{ width: {
                         xs: '50px',
                         sm: '60px',
                         md: '70px',

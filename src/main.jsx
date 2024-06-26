@@ -18,6 +18,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import { CartProvider } from './components/CartContext';
 import { AuthProvider } from './components/AuthContext';
+import ScrollToTop from './components/ScrollToTop';
 
 const Layout = ({ children }) => (
   <>
@@ -43,6 +44,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <AuthProvider>
       <CartProvider>
         <Router>
+          <ScrollToTop />
           <Layout>
             <Routes>
               <Route exact path="/" element={<Accueil />} />

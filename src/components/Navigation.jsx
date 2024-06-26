@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '/logo.png';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import EmailIcon from '@mui/icons-material/Email';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Tooltip from '@mui/material/Tooltip';
+import { CartContext } from './CartContext';
 
 const MenuLogoLink = styled(Link)`
   text-decoration: none;
@@ -13,22 +14,28 @@ const MenuLogoLink = styled(Link)`
     margin-right: 17px;
   }
 `;
+
 const ImgLogo = styled.img`
   @media (max-width: 900px) {
     width: 50px;
   }
 `;
+
 const MenuIconLink = styled(Link)`
+  position: relative;
   text-decoration: none;
 `;
+
 const MenuTextLink = styled(Link)`
   text-decoration: none;
   font-size: 24px;
   color: var(--importantContentText);
 `;
+
 const ItemMenuContainerFirstLine = styled.div`
   padding-left: 15px;
 `;
+
 const ItemMenuContainerSecondLine = styled.div`
   display: flex;
   justify-content: space-between;
@@ -41,6 +48,7 @@ const ItemMenuContainerSecondLine = styled.div`
     gap: 20px;
   }
 `;
+
 const ItemMenuContainerThirdLine = styled.div`
   gap: 15px;
   margin-right: 15px;
@@ -50,9 +58,11 @@ const ItemMenuContainerThirdLine = styled.div`
     margin-right: 0;
   }
 `;
+
 const SpanIcon = styled.span`
   font-size: large;
 `;
+
 const NavMenu = styled.nav`
   position: fixed;
   z-index: 2;
@@ -61,6 +71,7 @@ const NavMenu = styled.nav`
   width: 100%;
   background-color: var(--menuBg);
 `;
+
 const UlMenu = styled.ul`
   display: flex;
   justify-content: space-between;
@@ -75,6 +86,7 @@ const UlMenu = styled.ul`
     padding-bottom: 15px;
   }
 `;
+
 const LiIconMenu = styled.div`
   display: flex;
   justify-content: space-between;
@@ -124,9 +136,39 @@ const Burger = styled.div`
   }
 `;
 
+const ProductsNumberContainer = styled.div`
+  position: absolute;
+  top: -8px;
+  right: 4px;
+  display: flex;
+  width: 20px; 
+  height: 20px; 
+  border-radius: 9999px;
+  background-color: var(--quantiteCartIconBg);
+  color: var(--quantiteTxt);
+`;
+
+const ProductsNumberText = styled.div`
+  margin: auto;
+  width: 20px; 
+  height: 20px; 
+  border-radius: 9999px;
+  color: var(--quantiteTxt);
+  font-size: 0.9rem;
+`;
+
 function Navigation() {
   const [open, setOpen] = useState(false);
-  const isAuthenticated = localStorage.user;
+  const { cart }        = useContext(CartContext);
+
+  let user, username, isAuthenticated = false;
+  if(localStorage.user){
+    user            = JSON.parse(localStorage.user);
+    isAuthenticated = true;
+    username        = user.firstName + ' ' + user.lastName;
+  }
+
+  const productsNumber = cart && cart.length ? cart.reduce((acc, val) => acc + val.quantity, 0) : 0;
 
   return (
     <NavMenu>
@@ -151,10 +193,18 @@ function Navigation() {
         </ItemMenuContainerSecondLine>
         <ItemMenuContainerThirdLine>
           <LiIconMenu>
-            <MenuIconLink to="/cart"><SpanIcon className="material-icons"><ShoppingCartIcon fontSize="large"/></SpanIcon></MenuIconLink>
-            {/* <MenuIconLink to="/favorite"><SpanIcon className="material-icons"><FavoriteIcon fontSize="large"/></SpanIcon></MenuIconLink> */}
+            <MenuIconLink to="/cart">
+              <ProductsNumberContainer>
+                <ProductsNumberText>{productsNumber}</ProductsNumberText>
+              </ProductsNumberContainer>
+              <SpanIcon className="material-icons"><ShoppingCartIcon fontSize="large"/></SpanIcon>
+            </MenuIconLink>
             <MenuIconLink to="/contact"><SpanIcon className="material-icons"><EmailIcon fontSize="large"/></SpanIcon></MenuIconLink>
-            <MenuIconLink to="/login" className={isAuthenticated ? 'userConnect' : ''}><SpanIcon className="material-icons"><AccountCircleIcon fontSize="large"/></SpanIcon></MenuIconLink>
+            <MenuIconLink to="/login" className={isAuthenticated ? 'userConnect' : ''}>
+              <Tooltip title={isAuthenticated ? username : ''}>
+                <SpanIcon className="material-icons"><AccountCircleIcon fontSize="large"/></SpanIcon>
+              </Tooltip>
+            </MenuIconLink>
           </LiIconMenu>
         </ItemMenuContainerThirdLine>
       </UlMenu>

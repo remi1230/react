@@ -6,37 +6,56 @@ import TitlePage from '../components/TitlePage';
 import { CartContext } from '../components/CartContext';
 
 const DivSuperContainer = styled.div`
-    margin-top: 75px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  margin-top: 75px;
+  width: 90%;
 `;
+
 const DivContainer = styled.div`
-    display: grid;
-    grid-template-columns: 67% 33%;
-    gap: 50px;
-    padding: 15px;
-    font-size: 28px;
-    @media (max-width: 900px) {
-        grid-template-columns: 50% 50%;
-        padding-right: 0px;
-    }
-    @media (max-width: 580px) {
+  margin: auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 67% 33%;
+  gap: 50px;
+  padding: 0 15px 15px 15px;
+  font-size: 28px;
+  @media (max-width: 900px) {
+    grid-template-columns: 50% 50%;
+    padding-right: 0px;
+  }
+  @media (max-width: 580px) {
     display: flex;
-        flex-direction: column-reverse;
-    }
+    flex-direction: column-reverse;
+  }
 `;
-const DivCheckout = styled.div`
-    
+
+const TitlePageStyled = styled(TitlePage)`
+  border-radius: 9999px;
+  background-color: #dddbd0;
+  padding: 8px;
 `;
-const DivCart = styled.div`
-    
-`;
+
+const DivCheckout = styled.div``;
+
+const DivCart = styled.div``;
 
 function Checkout() {
   const { cart } = useContext(CartContext);
-  const prixTot  = cart.reduce((acc, val) => acc + (val.price * val.quantity), 0).toFixed(2) + "€";
+  const prixTot = cart.reduce((acc, val) => acc + (val.price * val.quantity), 0).toFixed(2) + "€";
 
   return (
     <DivSuperContainer>
-      <TitlePage title={"Payer - " + prixTot} />
+      <TitlePage 
+        title={"Payer - " + prixTot} 
+        additionalstyles={`
+          border-radius: 9999px;
+          background-color: var(--checkoutTitleBg);
+          padding: 8px;
+        `}
+      />
       <DivContainer>
         <DivCheckout>
           <CheckoutForm />

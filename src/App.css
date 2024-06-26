@@ -40,11 +40,13 @@
   --prodBg: linear-gradient(42deg, rgb(20, 10, 36) 0%, rgb(82, 110, 110) 55%, rgb(179, 193, 190) 100%);
   --customTooltipText: #f4f0ed;
   --customTooltipBg: #a5a5a5;
-  --contactFieldBg: #abc;
   --contactFieldBgFocused: #abc;
   --contactFieldBorderFocused: #abc;
   --contactFieldTxt: rgb(42, 13, 106);
   --contactFieldTxtFocused: rgb(42, 13, 106);
+  --quantiteCartIconBg: rgb(221, 198, 181);
+  --contactFieldBg: #dde1e6;
+  --checkoutTitleBg: #cce1d9;
 }
 
 /* ****************************** IMPORTS ********************************* */
