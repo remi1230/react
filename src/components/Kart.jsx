@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from './CartContext';
-import { AuthContext } from './AuthContext';
 import styled from 'styled-components';
 import Card from '@mui/material/Card';
 import { useMediaQuery, CardContent, Tooltip } from '@mui/material';
@@ -10,6 +9,7 @@ import Quantite from './quantite';
 import Button from '@mui/material/Button';
 import TrashIcon from '@mui/icons-material/DeleteForever';
 import TitlePage from './TitlePage';
+import { userConnectInfos } from '../services/authInfos';
 
 const CartContainer = styled.div`
   display: flex;
@@ -146,6 +146,11 @@ const PrixTotal = styled.div`
   }
 `;
 
+const ParaphEmptyKart = styled.p`
+  color: var(--categorieTitle);
+  margin-bottom: 600px;
+`;
+
 const CustomTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -159,9 +164,11 @@ const CustomTooltip = styled(({ className, ...props }) => (
 
 const Cart = () => {
   const { cart, removeFromCart, updateQuantity } = useContext(CartContext);
-  const { isAuthenticated } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { username }                             = userConnectInfos();
 
+  const cartUser = cart.filter(prod => prod.username === username);
+
+  const navigate = useNavigate();
   const matches = useMediaQuery("@media (max-width:360px)");
 
   const handleRemove = (product) => {
@@ -187,8 +194,8 @@ const Cart = () => {
   };
 
   let prixTot = 0;
-  if(cart.length){
-    prixTot = cart.reduce((acc, val) => acc + (val.price * val.quantity), 0).toFixed(2);
+  if(cartUser.length){
+    prixTot = cartUser.reduce((acc, val) => acc + (val.price * val.quantity), 0).toFixed(2);
   }
 
   const breakpoints = {
@@ -203,15 +210,15 @@ const Cart = () => {
     navigate(`/produit/${id}`);
   };
 
-  const kartPrixTotal = cart.reduce((acc, val) => acc + (val.price * val.quantity), 0).toFixed(2) + " €";
+  const kartPrixTotal = cartUser.reduce((acc, val) => acc + (val.price * val.quantity), 0).toFixed(2) + " €";
 
   return (
     <CartContainer>
-      <TitlePage title={"Mon Panier - " + kartPrixTotal} />
-      {cart.length === 0 ? (
-        <p>Votre panier est vide</p>
+      {cartUser.length !== 0 ? (<TitlePage title={"Mon Panier - " + kartPrixTotal} />) : (undefined)}
+      {cartUser.length === 0 ? (
+        <ParaphEmptyKart>Votre panier est vide</ParaphEmptyKart>
       ) : (
-        cart.map((product, index) => (
+        cartUser.map((product, index) => (
           <CartItem key={product.id}
           sx={{ backgroundColor: ' background: rgb(2,0,36); background: var(--cartItemBg); ' }}>
             <CardContentStyled sx={matches ? { paddingRight: 0, paddingLeft: '4px' } : {}}>
@@ -273,7 +280,7 @@ const Cart = () => {
           </CartItem>
         ))
       )}
-      {cart.length > 0 && (
+      {cartUser.length > 0 && (
         <CaisseContainer>
           <PrixTotal sx={{fontWeight: 600}}>Prix total du panier: {prixTot} €</PrixTotal>
           <CartButton sx={{ color: 'var(--addToCartTxt)', marginTop: '20px', backgroundColor: 'var(--addToCartBg)', fontWeight: 900, }} variant="contained" onClick={handleCheckout}>

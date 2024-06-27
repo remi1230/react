@@ -7,6 +7,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Tooltip from '@mui/material/Tooltip';
 import { CartContext } from './CartContext';
+import { userConnectInfos } from '../services/authInfos';
 
 const MenuLogoLink = styled(Link)`
   text-decoration: none;
@@ -161,14 +162,10 @@ function Navigation() {
   const [open, setOpen] = useState(false);
   const { cart }        = useContext(CartContext);
 
-  let user, username, isAuthenticated = false;
-  if(localStorage.user){
-    user            = JSON.parse(localStorage.user);
-    isAuthenticated = true;
-    username        = user.firstName + ' ' + user.lastName;
-  }
+  const { isAuthenticated, username } = userConnectInfos();
+  const cartUser                      = cart.filter(prod => prod.username === username);
 
-  const productsNumber = cart && cart.length ? cart.reduce((acc, val) => acc + val.quantity, 0) : 0;
+  const productsNumber = cartUser && cartUser.length ? cartUser.reduce((acc, val) => acc + val.quantity, 0) : 0;
 
   return (
     <NavMenu>

@@ -1,8 +1,10 @@
 import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as colors from '@mui/material/colors';
 import { CartContext } from './CartContext';
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
+import { userConnectInfos } from '../services/authInfos';
 
 const AddToCartButt = styled(Button)`
     width: 400px;
@@ -18,16 +20,24 @@ const AddToCartButton = ({ product, quantity, className, mediaQueries }) => {
   const { addToCart, removeFromCart, cart } = useContext(CartContext);
   const [isInCart, setIsInCart] = useState(cart.some(item => item.id === product.id));
   const [buttonText, setButtonText] = useState(isInCart ? "- PANIER" : "+ PANIER");
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    if (isInCart) {
-      removeFromCart(product);
-      setButtonText("+ PANIER");
-    } else {
-      addToCart({ ...product, quantity });
-      setButtonText("- PANIER");
+    const { isAuthenticated, username } = userConnectInfos();
+    
+    if(isAuthenticated){
+      if (isInCart) {
+        removeFromCart(product);
+        setButtonText("+ PANIER");
+      } else {
+        addToCart({ ...product, quantity, username });
+        setButtonText("- PANIER");
+      }
+      setIsInCart(!isInCart);
     }
-    setIsInCart(!isInCart);
+    else{
+      navigate('/login');
+    }
   };
 
   return (

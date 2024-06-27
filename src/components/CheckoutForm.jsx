@@ -9,6 +9,7 @@ import StripePaymentForm from './StripePaymentForm';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import { CartContext } from './CartContext';
+import { userConnectInfos } from '../services/authInfos';
 
 const stripePromise = loadStripe('pk_test_51PVFKgFIKwAXFKFkLw042PAD3owEteum3TVWJZ18rDI82Kn5RBwEpTBvv59Jy2W1Copfmq4IykmNmvSCtyJMzFHt00cFI4RZrV');
 
@@ -23,7 +24,7 @@ const validationSchema = Yup.object({
   pays: Yup.string().required('Required'),
 });
 
-const Title = styled.h4`
+const Title = styled.h5`
     color: var(--contactFieldTxt);
     font-weight: 600;
     margin: 0 0 10px;
@@ -100,6 +101,9 @@ const CheckoutForm = () => {
   const [isDisabled, setIsDisabled] = useState(true);
   const { cart, removeFromCart }    = useContext(CartContext);
   const navigate                    = useNavigate();
+  const { username }                = userConnectInfos();
+
+  const [ userFirstName, userLastName ] = username.split(' ');
 
   const handleSubmit = (values, { setSubmitting, resetForm }) => {
     // Logique d'envoi du formulaire
@@ -114,7 +118,7 @@ const CheckoutForm = () => {
       return;
     }
     setOpen(false); // Fermer l'alerte
-    cart.forEach(produit => { removeFromCart(produit); });
+    cart.forEach(produit => { if(produit.username === username){ removeFromCart(produit); } });
     navigate('/');
   };
 
@@ -132,7 +136,7 @@ const CheckoutForm = () => {
     <ComponentContainer>
       <Title>Mes informations</Title>
       <Formik
-        initialValues={{ nom: '', prenom: '', email: '', adresse: '', cp: '', ville: '', tel: '' }}
+        initialValues={{ nom: userLastName, prenom: userFirstName, email: '', adresse: '', cp: '', ville: '', tel: '' }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
@@ -158,7 +162,7 @@ const CheckoutForm = () => {
               <SubTitleForm>Livraison</SubTitleForm>
               <DivField>
                 <FormControl variant="outlined" fullWidth>
-                  <InputLabel id="paysSelectLabel">Pays</InputLabel>
+                  <InputLabel sx={{ color: "var(--contactFieldTxt)", }}  id="paysSelectLabel">Pays</InputLabel>
                   <StyledSelect
                     labelId="paysSelectLabel"
                     id="paysSelect"
@@ -187,7 +191,8 @@ const CheckoutForm = () => {
                   helperText={touched.nom && errors.nom}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.nom}
+                  value={userLastName}
+                  defaultValue={userLastName}
                 />
                 <StyledTextField
                   name="prenom"
@@ -200,7 +205,8 @@ const CheckoutForm = () => {
                   helperText={touched.prenom && errors.prenom}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.prenom}
+                  value={userFirstName}
+                  defaultValue={userFirstName}
                 />
               </DivField>
               <DivField>

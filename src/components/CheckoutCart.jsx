@@ -1,12 +1,12 @@
 import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { CartContext } from './CartContext';
 import Card from '@mui/material/Card';
-import { CardContent } from '@mui/material';
+import { CardContent, Tooltip } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
+import { userConnectInfos } from '../services/authInfos';
 
-const Title = styled.h4`
+const Title = styled.h5`
     color: var(--contactFieldTxt);
     font-weight: 600;
     margin: 0 0 55px;
@@ -123,20 +123,28 @@ const QuantiteNumber = styled.div`
     font-size: 0.9rem;
 `;
 
+const CustomTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .MuiTooltip-tooltip`]: {
+    fontSize        : '0.8rem',
+    fontWeight      : '700',
+    color           : 'var(--customTooltipText)',
+    backgroundColor : 'var(--customTooltipBg)',
+  },
+}));
+
 
 const CheckoutCart = () => {
-    const { cart } = useContext(CartContext);
-
-    const navigate = useNavigate();
-    const handleImageClick = (id) => {
-      navigate(`/produit/${id}`);
-    };
+    const { cart }     = useContext(CartContext);
+    const { username } = userConnectInfos();
+    const cartUser     = cart.filter(prod => prod.username === username);
   
     return (
       <div>
         <Title>Mon panier</Title>
         {
-          cart.map((product, index) => (
+          cartUser.map((product, index) => (
             <CartItem key={product.id}
             sx={{ backgroundColor: ' background: rgb(2,0,36); background: var(--cartItemBg); ' }}>
                 <QuantiteContainer>
@@ -144,18 +152,20 @@ const CheckoutCart = () => {
                 </QuantiteContainer>
                 <CardContentStyled>
                 <ProdDetailContainer>
-                  <CartItemThumbail onClick={() => handleImageClick(product.id)} sx={{ width: {
-                        xs: '50px',
-                        sm: '60px',
-                        md: '70px',
-                        lg: '85px',
-                        xl: '100px',
-                    }, }} key={index} component="img" image={product.thumbnail} alt={product.title} />
-                    <CartItemDetails>
+                  <CustomTooltip title={product.description} arrow placement="top"enterDelay={500} leaveDelay={200} >
+                    <CartItemThumbail sx={{ width: {
+                          xs: '50px',
+                          sm: '60px',
+                          md: '70px',
+                          lg: '85px',
+                          xl: '100px',
+                      }, }} key={index} component="img" image={product.thumbnail} alt={product.title} />
+                  </CustomTooltip>
+                  <CartItemDetails>
                     <CartItemTitle>{product.title}</CartItemTitle>
                     <CartItemPrice>Prix unitaire: {product.price.toFixed(2)} €</CartItemPrice>
                     <CartItemPrice>Prix total: {(product.price * product.quantity).toFixed(2) + ' €'}</CartItemPrice>
-                    </CartItemDetails>
+                  </CartItemDetails>
                 </ProdDetailContainer>
                 </CardContentStyled>
           </CartItem>
