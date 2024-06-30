@@ -14,14 +14,14 @@ import { userConnectInfos } from '../services/authInfos';
 const stripePromise = loadStripe('pk_test_51PVFKgFIKwAXFKFkLw042PAD3owEteum3TVWJZ18rDI82Kn5RBwEpTBvv59Jy2W1Copfmq4IykmNmvSCtyJMzFHt00cFI4RZrV');
 
 const validationSchema = Yup.object({
-  nom: Yup.string().required('Required'),
-  prenom: Yup.string().required('Required'),
-  adresse: Yup.string().required('Required'),
-  cp: Yup.string().required('Required'),
-  ville: Yup.string().required('Required'),
-  tel: Yup.string().required('Required'),
-  email: Yup.string().email('Invalid email address').required('Required'),
-  pays: Yup.string().required('Required'),
+  nom: Yup.string().required('Requis'),
+  prenom: Yup.string().required('Requis'),
+  adresse: Yup.string().required('Requis'),
+  cp: Yup.string().required('Requis'),
+  ville: Yup.string().required('Requis'),
+  tel: Yup.string().required('Requis'),
+  email: Yup.string().email('Adresse email invalide').required('Requis'),
+  pays: Yup.string().required('Requis'),
 });
 
 const Title = styled.h5`
@@ -97,11 +97,11 @@ const PaymentButton = styled(Button)`
 `;
 
 const CheckoutForm = () => {
-  const [open, setOpen]             = useState(false);
-  const [isDisabled, setIsDisabled] = useState(true);
-  const { cart, removeFromCart }    = useContext(CartContext);
-  const navigate                    = useNavigate();
-  const { username }                = userConnectInfos();
+  const [open, setOpen]               = useState(false);
+  const [isDisabled, setIsDisabled]   = useState(true);
+  const { cart, removeFromCart }      = useContext(CartContext);
+  const navigate                      = useNavigate();
+  const { username, adresse, email }  = userConnectInfos();
 
   const [ userFirstName, userLastName ] = username.split(' ');
 
@@ -136,7 +136,7 @@ const CheckoutForm = () => {
     <ComponentContainer>
       <Title>Mes informations</Title>
       <Formik
-        initialValues={{ nom: userLastName, prenom: userFirstName, email: '', adresse: '', cp: '', ville: '', tel: '' }}
+        initialValues={{ nom: userLastName, prenom: userFirstName, email: email, adresse: adresse.address, cp: adresse.postalCode, ville: adresse.city, tel: '' }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
@@ -170,6 +170,7 @@ const CheckoutForm = () => {
                     label="Pays"
                     onChange={handleChange}
                     name="pays"
+                    required
                   >
                     {pays.map((p) => (
                       <MenuItem key={p} value={p}>
@@ -191,8 +192,7 @@ const CheckoutForm = () => {
                   helperText={touched.nom && errors.nom}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={userLastName}
-                  defaultValue={userLastName}
+                  value={values.nom}
                 />
                 <StyledTextField
                   name="prenom"
@@ -205,8 +205,7 @@ const CheckoutForm = () => {
                   helperText={touched.prenom && errors.prenom}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={userFirstName}
-                  defaultValue={userFirstName}
+                  value={values.prenom}
                 />
               </DivField>
               <DivField>

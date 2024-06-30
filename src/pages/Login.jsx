@@ -2,26 +2,28 @@ import React, { useState, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../components/AuthContext';
 import styled from 'styled-components';
+import TitlePage from '../components/TitlePage';
 
 const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   height: 100vh;
-  background-color: #f5f5f5;
+  background-color: var(--background);
 `;
 
 const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
-  background: white;
+  background: #825555;
   padding: 40px;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 `;
 
 const Input = styled.input`
+  background-color: var(--contactFieldBg);
+  color: var(--contactFieldTxt);
   margin-bottom: 20px;
   padding: 10px;
   border: 1px solid #ccc;
@@ -34,12 +36,13 @@ const ButtonConnexion = styled.button`
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #007bff;
-  color: white;
+  background-color: var(--connexionButtonBg);
+  color: var(--connexionButtonText);
   font-size: 16px;
   cursor: pointer;
   &:hover {
-    background-color: #0056b3;
+    background-color: var(--connexionButtonBgHover);
+    color: var(--connexionButtonTextHover);
   }
 `;
 
@@ -48,13 +51,18 @@ const ButtonDeconnexion = styled.button`
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #007bff;
-  color: white;
+  background-color: var(--deconnexionButtonBg);
+  color: var(--deconnexionButtonText);
   font-size: 16px;
   cursor: pointer;
   &:hover {
-    background-color: #0056b3;
+    background-color: var(--deconnexionButtonBgHover);
+    color: var(--deconnexionButtonTextHover);
   }
+`;
+
+const DivContainer = styled.div`
+  margin-top: 75px;
 `;
 
 const Login = () => {
@@ -77,25 +85,28 @@ const Login = () => {
   };
 
   return (
-    <LoginContainer>
-      <LoginForm onSubmit={handleSubmit}>
-        <h2>Connexion</h2>
-        <Input
-          type="text"
-          placeholder="Nom d'utilisateur"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <Input
-          type="password"
-          placeholder="Mot de passe"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <ButtonConnexion type="submit">Se connecter</ButtonConnexion>
-      </LoginForm>
-      <ButtonDeconnexion onClick={ logout }>Se Déconnecter</ButtonDeconnexion>
-    </LoginContainer>
+    <DivContainer>
+      <TitlePage title="Connectez-vous"/>
+      <LoginContainer>
+        <LoginForm onSubmit={handleSubmit}>
+          <Input
+            type="text"
+            placeholder="Nom d'utilisateur"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            type="password"
+            placeholder="Mot de passe"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <ButtonConnexion type="submit">CONNEXION
+          </ButtonConnexion>
+        </LoginForm>
+        <ButtonDeconnexion onClick={ logout }>DÉCONNEXION</ButtonDeconnexion>
+      </LoginContainer>
+      </DivContainer>
   );
 };
 

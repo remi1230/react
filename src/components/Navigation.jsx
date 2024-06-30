@@ -92,6 +92,7 @@ const LiIconMenu = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 20px;
+  margin-top: 5px;
 
   @media (max-width: 900px) {
     flex-direction: column;
@@ -107,7 +108,7 @@ const Burger = styled.div`
   background: transparent;
   border: none;
   cursor: pointer;
-  z-index: 10;
+  z-index: 999;
 
   div {
     width: 30px;

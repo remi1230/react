@@ -16,7 +16,7 @@
   --paginationItemOnHoverText: #E5A443;
   --cardProdBg: #dfd7cd;
   --quantiteBg: #eee;
-  --quantiteTitle: #B3687E;;
+  --quantiteTitle: #B3687E;
   --quantiteTxt: #E93219;
   --quantiteNumber: #95668D;
   --addToCartBg: #552828;
@@ -47,6 +47,14 @@
   --quantiteCartIconBg: rgb(221, 198, 181);
   --contactFieldBg: #dde1e6;
   --checkoutTitleBg: #cce1d9;
+  --connexionButtonBg: #fba8a8;
+  --connexionButtonText: #1d1f3c;
+  --connexionButtonBgHover: #d83277;
+  --connexionButtonTextHover: #b5fff9;
+  --deconnexionButtonBg: #df2c14;
+  --deconnexionButtonText: #e1e1ec;;
+  --deconnexionButtonBgHover: #6b334a;
+  --deconnexionButtonTextHover: #b5fff9;
 }
 
 /* ****************************** IMPORTS ********************************* */

@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { getOneUserById } from '../services/authInfos';
 
 export const AuthContext = createContext();
 
@@ -19,9 +20,10 @@ export const AuthProvider = ({ children }) => {
         username,
         password
       });
-      setUser(response.data);
-      localStorage.setItem('user', JSON.stringify(response.data));
-      return { success: true, data: response.data };
+      const user = await getOneUserById(response.data.id);
+      setUser(user);
+      localStorage.setItem('user', JSON.stringify(user));
+      return { success: true, data: user };
     } catch (error) {
       return { success: false, error: error.response ? error.response.data : 'Login failed' };
     }

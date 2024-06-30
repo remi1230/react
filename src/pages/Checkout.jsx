@@ -47,8 +47,8 @@ const DivCheckout = styled.div``;
 const DivCart = styled.div``;
 
 function Checkout() {
-  const { cart }     = useContext(CartContext);
-  const { username } = userConnectInfos();
+  const { cart }               = useContext(CartContext);
+  const { username, civilite } = userConnectInfos();
 
   const cartUser = cart.filter(prod => prod.username === username);
   const prixTot  = cartUser.reduce((acc, val) => acc + (val.price * val.quantity), 0).toFixed(2) + "€";
@@ -56,7 +56,7 @@ function Checkout() {
   return (
     <DivSuperContainer>
       <TitlePage 
-        title={username + " - payer " + prixTot} 
+        title={civilite + username + " - payer " + prixTot} 
         additionalstyles={`
           border-radius: 15px;
           padding: 8px;
