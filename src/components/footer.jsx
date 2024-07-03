@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import logo from '/logo.png';
 import FacebookCartIcon from '@mui/icons-material/Facebook';
 import XIcon from '@mui/icons-material/X';
-import YoutubeIcon from '@mui/icons-material/Youtube';
 import InstagramIcon from '@mui/icons-material/Instagram';
 
 
@@ -80,7 +79,7 @@ function Footer() {
         <FooterLineItemSocialMedias>
           <a href=""><FacebookCartIcon fontSize="large"/></a>
           <a href=""><XIcon fontSize="large"/></a>
-          <a href=""><YoutubeIcon fontSize="large"/></a>
+          <a href=""><XIcon fontSize="large"/></a>
           <a href=""><InstagramIcon fontSize="large"/></a>
         </FooterLineItemSocialMedias>
         <FooterLineItemBlock><ImgLogo src={logo} alt="Le logo" /></FooterLineItemBlock>
