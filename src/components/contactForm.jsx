@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Button, Snackbar, Alert, TextField } from '@mui/material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+import { userConnectInfos } from '../services/authInfos';
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Required'),
@@ -39,10 +40,12 @@ const ContactForm = () => {
     setOpen(false);
   };
 
+  const { username, email } = userConnectInfos();
+
   return (
     <div>
       <Formik
-        initialValues={{ name: '', email: '', message: '' }}
+        initialValues={{ name: username, email: email, message: '' }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >

@@ -16,6 +16,7 @@ import ProduitsByCategorie from './pages/ProduitsByCategorie';
 import Checkout from './pages/Checkout';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Page404 from './pages/Page404';
 import { CartProvider } from './components/CartContext';
 import { AuthProvider } from './components/AuthContext';
 import ScrollToTop from './components/ScrollToTop';
@@ -59,6 +60,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="*" element={<Page404 />} />
             </Routes>
           </Layout>
         </Router>
