@@ -29,7 +29,7 @@ const ParagraphTitleValeur = styled.p`
 `;
 
 const AccueilValeurs = () => {
-  const isNetlify = window.location.hostname.includes('netlify.app');
+  const isNetlify   = window.location.hostname.includes('netlify.app');
   const imgBasePath = isNetlify ? "../../images/valeurs/" : "../../public/images/valeurs/";
 
   return (

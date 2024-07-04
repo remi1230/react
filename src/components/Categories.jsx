@@ -37,7 +37,10 @@ const ImagesContainer = styled.div`
 `;
 
   function makeImgCatURL(imgTitle){
-    return `../../public/images/categories/${imgTitle}.png`;
+    const isNetlify   = window.location.hostname.includes('netlify.app');
+    const imgBasePath = isNetlify ? "../../images/categories/" : "../../public/images/categories/";
+
+    return `${imgBasePath}${imgTitle}.png`;
   }
 
   function Capitilize(str){
