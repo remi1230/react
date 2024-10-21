@@ -2,10 +2,11 @@ import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '/logo.png';
-//import EmailIcon from '@mui/icons-material/Email';
-import { CartContext } from './CartContext';
-import Tooltip from '@mui/material/Tooltip';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import EmailIcon from '@mui/icons-material/Email';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Tooltip from '@mui/material/Tooltip';
+import { CartContext } from './CartContext';
 import { userConnectInfos } from '../services/authInfos';
 
 const MenuLogoLink = styled(Link)`
@@ -91,7 +92,6 @@ const LiIconMenu = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 20px;
-  margin-top: 5px;
 
   @media (max-width: 900px) {
     flex-direction: column;
@@ -107,7 +107,7 @@ const Burger = styled.div`
   background: transparent;
   border: none;
   cursor: pointer;
-  z-index: 999;
+  z-index: 10;
 
   div {
     width: 30px;
@@ -137,6 +137,27 @@ const Burger = styled.div`
   }
 `;
 
+const ProductsNumberContainer = styled.div`
+  position: absolute;
+  top: -8px;
+  right: 4px;
+  display: flex;
+  width: 20px; 
+  height: 20px; 
+  border-radius: 9999px;
+  background-color: var(--quantiteCartIconBg);
+  color: var(--quantiteTxt);
+`;
+
+const ProductsNumberText = styled.div`
+  margin: auto;
+  width: 20px; 
+  height: 20px; 
+  border-radius: 9999px;
+  color: var(--quantiteTxt);
+  font-size: 0.9rem;
+`;
+
 function Navigation() {
   const [open, setOpen] = useState(false);
   const { cart }        = useContext(CartContext);
@@ -161,14 +182,21 @@ function Navigation() {
         </ItemMenuContainerFirstLine>
         <ItemMenuContainerSecondLine>
           <li>
-            <MenuTextLink to="/stats">STATS</MenuTextLink>
+            <MenuTextLink to="/produits">Produits</MenuTextLink>
           </li>
           <li>
-            <MenuTextLink to="/admin">ADMIN</MenuTextLink>
+            <MenuTextLink to="/categories">Catégories</MenuTextLink>
           </li>
         </ItemMenuContainerSecondLine>
         <ItemMenuContainerThirdLine>
           <LiIconMenu>
+            <MenuIconLink to="/cart">
+              <ProductsNumberContainer>
+                <ProductsNumberText>{productsNumber}</ProductsNumberText>
+              </ProductsNumberContainer>
+              <SpanIcon className="material-icons"><ShoppingCartIcon fontSize="large"/></SpanIcon>
+            </MenuIconLink>
+            <MenuIconLink to="/contact"><SpanIcon className="material-icons"><EmailIcon fontSize="large"/></SpanIcon></MenuIconLink>
             <MenuIconLink to="/login" className={isAuthenticated ? 'userConnect' : ''}>
               <Tooltip title={isAuthenticated ? username : ''}>
                 <SpanIcon className="material-icons"><AccountCircleIcon fontSize="large"/></SpanIcon>
