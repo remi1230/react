@@ -36,7 +36,7 @@ const ImagesContainer = styled.div`
     }
 `;
 const ProdPresentationItem = styled(ProdPresentation)`
-    width: unset;
+    width: unset !important;
     height: 387px;
 `;
 const TitleProduits = styled.div`
