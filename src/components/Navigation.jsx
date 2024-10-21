@@ -2,10 +2,11 @@ import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '/logo.png';
-/*import EmailIcon from '@mui/icons-material/Email';
+//import EmailIcon from '@mui/icons-material/Email';
+import { CartContext } from './CartContext';
 import Tooltip from '@mui/material/Tooltip';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { userConnectInfos } from '../services/authInfos';*/
+import { userConnectInfos } from '../services/authInfos';
 
 const MenuLogoLink = styled(Link)`
   text-decoration: none;
