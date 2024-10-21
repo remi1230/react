@@ -20,6 +20,7 @@ const PriceProduit = styled.div`
 `;
 const CardProduit = styled(Card)`
     background-color: var(--cardProdBg);
+    cursor: pointer; /* Vous pouvez également ajouter ce style ici si nécessaire */
 `;
 const CardContentStyled = styled(CardContent)`
     background: linear-gradient(42deg, rgb(2, 0, 36) 0%, rgb(41, 55, 55) 55%, rgb(179, 193, 190) 100%);
@@ -41,7 +42,8 @@ const CustomTooltip = styled(({ className, ...props }) => (
     },
 }));
 
-const ProdPresentation = (props) => {
+// Le composant ProdPresentation accepte maintenant les styles via props.className
+const ProdPresentation = ({ className, id, title, image, description, price }) => {
   const navigate = useNavigate();
 
   const handleImageClick = (id) => {
@@ -49,16 +51,16 @@ const ProdPresentation = (props) => {
   };
 
   return (
-    <CardProduit key={props.id} sx={{ width: 275 }}  onClick={() => handleImageClick(props.id)} style={{ cursor: 'pointer' }}>
-        <CardContentStyled>
-          <CustomTooltip title={props.description} arrow placement="top"enterDelay={500} leaveDelay={200} >
-            <ImageProduitContainer>
-                <TitleProduit>{truncateString(props.title, 25)}</TitleProduit>
-                <CardMedia height="275" component="img" image={props.image} alt={props.title} />
-                <PriceProduit>{props.price + ' €'}</PriceProduit>
-            </ImageProduitContainer>
-          </CustomTooltip>
-        </CardContentStyled>
+    <CardProduit key={id} className={className} sx={{ width: 275 }} onClick={() => handleImageClick(id)}>
+      <CardContentStyled>
+        <CustomTooltip title={description} arrow placement="top" enterDelay={500} leaveDelay={200}>
+          <ImageProduitContainer>
+            <TitleProduit>{truncateString(title, 25)}</TitleProduit>
+            <CardMedia height="275" component="img" image={image} alt={title} />
+            <PriceProduit>{price + ' €'}</PriceProduit>
+          </ImageProduitContainer>
+        </CustomTooltip>
+      </CardContentStyled>
     </CardProduit>
   );
 };
