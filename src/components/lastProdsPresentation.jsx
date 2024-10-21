@@ -35,6 +35,10 @@ const ImagesContainer = styled.div`
         grid-template-columns: repeat(1, 1fr); 
     }
 `;
+const ProdPresentationItem = styled(ProdPresentation)`
+    width: unset;
+    height: 387px;
+`;
 const TitleProduits = styled.div`
     font-size: 28px;
     color: var(--prodsTitle);
@@ -113,7 +117,7 @@ const LastProdsPresentation = () => {
       <ImagesSuperContainer>
         <ImagesContainer>
           {data.map(item => (
-            <ProdPresentation key={item.uniqueId} id={item.id} image={item.images[0]} title={item.title} price={item.price} description={item.description}/>
+            <ProdPresentationItem key={item.uniqueId} id={item.id} image={item.images[0]} title={item.title} price={item.price} description={item.description}/>
           ))}
         </ImagesContainer>
       </ImagesSuperContainer>
